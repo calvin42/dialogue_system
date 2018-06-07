@@ -1,0 +1,10 @@
+{
+  "action_fingerprints": {},
+  "rasa_core": "0.9.0a3",
+  "max_history": null,
+  "ensemble_name": "rasa_core.policies.ensemble.SimplePolicyEnsemble",
+  "policy_names": [
+    "rasa_core.policies.memoization.MemoizationPolicy",
+    "rasa_core.policies.keras_policy.KerasPolicy"
+  ]
+}

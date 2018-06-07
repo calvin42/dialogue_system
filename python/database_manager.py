@@ -2,7 +2,8 @@ from log_lib import print_log
 import sqlsoup
 import sys
 
-class DatabaseManager():
+
+class MovieBuff:
     def __init__(self, uri):
         self.db = sqlsoup.SQLSoup(uri)
         self.movie = self.db.Movie
@@ -25,5 +26,35 @@ class DatabaseManager():
         if select is not None:
             return True
         return False
+
+    def get_movie(self, **kwargs):
+        movie = ""
+        director = ""
+        producer = ""
+        year = ""
+        for k, v in kwargs:
+            if v is not None:
+                key = k.lowercase()
+                if key == "director":
+                    director = v
+                elif key == "movie":
+                    movie = v
+                elif key == "producer":
+                    producer = v
+                elif key == "year":
+                    year = v
+        self.movie.filter()
+        return "movie"
     
+    def get_director(self):
+        return "director"
+    
+    def get_producer(self):
+        return "producer"
+#TODO implementare la ricerca nel db dei film, dei registi etc
+ 
+# class MovieBuff:
+#     def __init__(self, uri):
+#         self.dbm = DatabaseManager(uri)
+#         self.dbm.movie
     

@@ -1,0 +1,93 @@
+slots:  # what do I need to keep track?
+  movie:
+    type: text
+  movies:
+    type: list
+  actor_name:
+    type: text
+  actors_names:
+    type: list
+  director_name:
+    type: text
+  movie_year:
+    type: text
+  budget:
+    type: text
+  duration:
+    type: text
+  genres:
+    type: text
+  country:
+    type: text
+  language:
+    type: text
+  gross:
+    type: text
+  color:
+    type: bool
+  plot_keywords:
+    type: list
+  imdb_score:
+    type: float
+
+entities:
+  - movie
+  - actor_name
+  - actors_names
+  - director_name
+  - movie_year
+  - budget
+  - duration
+  - genres
+  - country
+  - language
+  - gross
+  - color
+  - plot_keywords
+  - imdb_score
+  
+intents: # what a user proably mean to say
+- greet
+- goodbye
+- ask_question
+- search_movie
+- search_director
+- search_producer
+- search_year
+- search_actors
+- search_country
+- search_gross
+- search_budget
+- thankyou
+- affirm
+- deny
+
+templates:
+  utter_greet:
+    - "Hello, how can I help you?"
+    - "Hey, what's up, dude?"
+  utter_goodbye:
+    - "Goodbye!"
+    - "Bye!"
+  utter_default:
+    - "default"
+  utter_ack_dosearch:
+    - "Wait here while I search in my memory palace"
+    - "I'm searching, don't go away"
+  utter_ack_findalternatives:
+    - "Uhm, strange... I'll search for something else"
+    - "Oh, I must have confuse it with something else"
+  utter_ask_howcanhelp:
+    - "How can I help?"
+    - "Can I do something for you?"
+  utter_ask_tochoose:
+    - "I found more than one result"
+actions: # what my bot can do
+- utter_greet
+- utter_goodbye
+- utter_default
+- utter_ack_dosearch
+- utter_ack_findalternatives
+- utter_ask_howcanhelp
+- utter_ask_tochoose
+- actions.ActionSearchMovie

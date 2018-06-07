@@ -1,0 +1,120 @@
+action_factory: null
+action_names:
+- utter_greet
+- utter_goodbye
+- utter_default
+- utter_ack_dosearch
+- utter_ack_findalternatives
+- utter_ask_howcanhelp
+- utter_ask_tochoose
+- action_search_movie
+actions:
+- utter_greet
+- utter_goodbye
+- utter_default
+- utter_ack_dosearch
+- utter_ack_findalternatives
+- utter_ask_howcanhelp
+- utter_ask_tochoose
+- actions.ActionSearchMovie
+config:
+  store_entities_as_slots: true
+entities:
+- movie
+- actor_name
+- actors_names
+- director_name
+- movie_year
+- budget
+- duration
+- genres
+- country
+- language
+- gross
+- color
+- plot_keywords
+- imdb_score
+intents:
+- greet
+- goodbye
+- ask_question
+- search_movie
+- search_director
+- search_producer
+- search_year
+- search_actors
+- search_country
+- search_gross
+- search_budget
+- thankyou
+- affirm
+- deny
+slots:
+  actor_name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  actors_names:
+    initial_value: null
+    type: rasa_core.slots.ListSlot
+  budget:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  color:
+    initial_value: null
+    type: rasa_core.slots.BooleanSlot
+  country:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  director_name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  duration:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  genres:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  gross:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  imdb_score:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  language:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie_year:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movies:
+    initial_value: null
+    type: rasa_core.slots.ListSlot
+  plot_keywords:
+    initial_value: null
+    type: rasa_core.slots.ListSlot
+templates:
+  utter_ack_dosearch:
+  - text: Wait here while I search in my memory palace
+  - text: I'm searching, don't go away
+  utter_ack_findalternatives:
+  - text: Uhm, strange... I'll search for something else
+  - text: Oh, I must have confuse it with something else
+  utter_ask_howcanhelp:
+  - text: How can I help?
+  - text: Can I do something for you?
+  utter_ask_tochoose:
+  - text: I found more than one result
+  utter_default:
+  - text: default
+  utter_goodbye:
+  - text: Goodbye!
+  - text: Bye!
+  utter_greet:
+  - text: Hello, how can I help you?
+  - text: Hey, what's up, dude?
+topics: []
