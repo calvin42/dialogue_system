@@ -2,21 +2,25 @@ action_factory: null
 action_names:
 - utter_greet
 - utter_goodbye
+- utter_welcome
 - utter_default
 - utter_ack_dosearch
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - action_search_movie
+- action_search_year
 actions:
 - utter_greet
 - utter_goodbye
+- utter_welcome
 - utter_default
 - utter_ack_dosearch
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - actions.ActionSearchMovie
+- actions.ActionSearchYear
 config:
   store_entities_as_slots: true
 entities:
@@ -113,8 +117,8 @@ templates:
   - text: default
   utter_goodbye:
   - text: Goodbye!
-  - text: Bye!
   utter_greet:
-  - text: Hello, how can I help you?
-  - text: Hey, what's up, dude?
+  - text: Hello
+  utter_welcome:
+  - text: You are welcome!
 topics: []

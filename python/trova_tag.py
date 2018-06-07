@@ -13,7 +13,30 @@ def label():
             if line not in seen:
                 seen.append(line)
 
+
+def prepare_intents():
+    
+    intents = []
+    for s in seen:
+        if " " in s:
+            splitted = s.split(" ")
+            for tag in splitted:
+                if "\n" in tag:
+                    tag = tag[:-1]
+                if tag not in intents:
+                    intents.append(tag)
+        else:
+            s = s[:-1]
+            if s not in intents:
+                intents.append(s)
+    print(intents)    
+    with open("intents.txt", "w") as f:
+        for el in intents:
+            f.write("search_"+el+"\n")
+        
+
 # train()
 label()
-with open("tags.txt", "w") as f:
-    f.writelines(seen)
+prepare_intents()
+# with open("tags.txt", "w") as f:
+    # f.writelines(seen)

@@ -51,6 +51,26 @@ class MovieBuff:
     
     def get_producer(self):
         return "producer"
+    
+    def get_year(self, **kwargs):
+        movie = ""
+        for k, v in kwargs:
+            if v is not None:
+                key = k.lowercase()
+                if key == "movie":
+                    movie = v
+                    something_found = True
+        if something_found:
+            m1 = self.movie.filter(self.movie.title==movie).one()
+            m2 = self.movies.filter(self.movies.movie_title==movie).one()
+            if m1 is not None:
+                return m1.year
+            elif m2 is not None:
+                return m2.title_year
+            else:
+                return None
+            
+
 #TODO implementare la ricerca nel db dei film, dei registi etc
  
 # class MovieBuff:

@@ -1,7 +1,13 @@
 {
-  "action_fingerprints": {},
+  "action_fingerprints": {
+    "action_listen": {
+      "slots": [
+        "movie"
+      ]
+    }
+  },
   "rasa_core": "0.9.0a3",
-  "max_history": null,
+  "max_history": 3,
   "ensemble_name": "rasa_core.policies.ensemble.SimplePolicyEnsemble",
   "policy_names": [
     "rasa_core.policies.memoization.MemoizationPolicy",

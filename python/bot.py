@@ -58,12 +58,14 @@ def run(serve_forever=True):
     
     agent = Agent(domain_file, interpreter=RegexInterpreter(), policies=[MemoizationPolicy(), KerasPolicy()])
 
-    # agent = Agent.load("models/dialogue", interpreter=RegexInterpreter())
-    ip = "4c4a1c76.ngrok.io"
+    agent = Agent.load("model/dialogue", interpreter=RegexInterpreter())
+    
+    ip = "1f7a3809"
+
     input_channel = TelegramInput(
         access_token="583835183:AAF9oo9QpLzWS7I_IQ4f_j0Um-HzH6TK9n4", # you get this when setting up a bot
         verify="KerovAssistantBot", # this is your bots username
-        webhook_url="https://"+ ip +"/webhook" # the url your bot should listen for messages
+        webhook_url="https://"+ ip +".ngrok.io/webhook" # the url your bot should listen for messages
     )
 
     agent.train_online(
@@ -79,5 +81,5 @@ def run(serve_forever=True):
 
 
 # train_nlu()
-train_dialogue()
-# run()
+# train_dialogue()
+run()

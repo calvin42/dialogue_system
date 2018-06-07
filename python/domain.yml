@@ -45,32 +45,44 @@ entities:
   - color
   - plot_keywords
   - imdb_score
-  
+
+# should I add also the intent that I can't answer?
 intents: # what a user proably mean to say
 - greet
 - goodbye
-- ask_question
-- search_movie
-- search_director
-- search_producer
-- search_year
-- search_actors
-- search_country
-- search_gross
-- search_budget
+- movie 
+- movie_name
+- director
+- director_name
+- year 
+- release_date
+- date
+- actor
+- actor_name
+- movie_count
+- genre
+- country
+- language
+- gross
+- revenue
+- budget
+- rating 
+- serach_star_rating
+- runtime
 - thankyou
 - affirm
 - deny
+- person
 
 templates:
   utter_greet:
-    - "Hello, how can I help you?"
-    - "Hey, what's up, dude?"
+    - "Hello"
   utter_goodbye:
     - "Goodbye!"
-    - "Bye!"
   utter_default:
     - "default"
+  utter_welcome:
+    - "You are welcome!"
   utter_ack_dosearch:
     - "Wait here while I search in my memory palace"
     - "I'm searching, don't go away"
@@ -82,12 +94,27 @@ templates:
     - "Can I do something for you?"
   utter_ask_tochoose:
     - "I found more than one result"
+
 actions: # what my bot can do
 - utter_greet
 - utter_goodbye
-- utter_default
+- utter_welcome
 - utter_ack_dosearch
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - actions.ActionSearchMovie
+- actions.ActionSearchYear
+- actions.ActionSearchDirector
+- actions.ActionSearchActor
+- actions.ActionSearchGross
+- actions.ActionSearchCountry
+- actions.ActionSearchColor
+- actions.ActionSearchBudget
+- actions.ActionSearchRating
+- actions.ActionSearchRuntime
+- actions.ActionSearchLanguage
+- actions.ActionSearchGenre
+- actions.ActionSearchActorsList
+- actions.ActionSearchMoviesList
+- actions.ActionCannotDoThis
