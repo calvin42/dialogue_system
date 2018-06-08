@@ -1,21 +1,19 @@
 slots:  # what do I need to keep track?
-  movie:
+  title:
     type: text
-  movies:
-    type: list
   actor_name:
     type: text
   actors_names:
     type: list
-  director_name:
+  director:
     type: text
-  movie_year:
+  year:
     type: text
   budget:
     type: text
-  duration:
+  runtime:
     type: text
-  genres:
+  genre:
     type: text
   country:
     type: text
@@ -27,7 +25,7 @@ slots:  # what do I need to keep track?
     type: bool
   plot_keywords:
     type: list
-  imdb_score:
+  score:
     type: float
 
 entities:
@@ -50,6 +48,7 @@ entities:
 intents: # what a user proably mean to say
 - greet
 - goodbye
+- nothing
 - movie 
 - movie_name
 - director

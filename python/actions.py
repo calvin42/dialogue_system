@@ -22,19 +22,11 @@ from rasa_core.policies.memoization import MemoizationPolicy
 from database_manager import MovieBuff
 
 URI = "mysql://lus:lus@localhost:3306/lus"
+slots = ["title", "actor_name", "actors_names", "director", 
+        "year", "budget", "runtime", "genre", "country", 
+        "language", "gross", "color", "score"
+]
 
-class ActionSearchMovie(Action):
-    def name(self):
-        return "action_search_movie"
-    
-    def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message("I'm searching for a movie")
-        director = tracker.get_slot("director")
-        movie = tracker.get_slot("movie")
-        producer = tracker.get_slot("producer")
-        movie_buff = MovieBuff(URI)
-        result = movie_buff.get_movie(director=director, movie=movie, producer=producer)
-        return [SlotSet("movie", "WIP")]
 
 #############################################################################################
 #                                                                                           #
@@ -43,7 +35,25 @@ class ActionSearchMovie(Action):
 #                                                                                           #
 #                                                                                           #
 #############################################################################################
+
+class ActionSearchMovie(Action):
+    def name(self):
+        return "action_search_movie"
     
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("I'm searching for a movie")
+        # director = tracker.get_slot("director")
+        # movie = tracker.get_slot("movie")
+        # producer = tracker.get_slot("producer")
+        current_slots = {}
+        for slot in slots:
+            current_slots[slot] = tracker.get_slot(slot)
+        movie_buff = MovieBuff(URI)
+
+        # result = movie_buff.get_movie(director=director, movie=movie, producer=producer)
+        result = movie_buff.get_movie(**current_slots)
+        return [SlotSet("movie", result.first())]
+
 class ActionSearchYear(Action):
     def name(self):
         return "action_search_year"
@@ -51,12 +61,14 @@ class ActionSearchYear(Action):
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message("I'm searching the year of production")
         movie = tracker.get_slot("movie")
+        if movie is None:
+            dispatcher.utter_message("You didn't provide any movie to search for")
         movie_buff = MovieBuff(URI)
-        year = movie_buff.get_year(movie=movie)
-        if year is None:
+        result = movie_buff.get_year(title=movie)
+        if result is None:
             dispatcher.utter_message("I'm sorry, I searched everywhere but I found nothing")
         else:
-            return [SlotSet("year",  str(year))]
+            return [SlotSet("year",  str(result))]
 
 
 class ActionSearchDirector(Action):

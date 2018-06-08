@@ -3,24 +3,48 @@ action_names:
 - utter_greet
 - utter_goodbye
 - utter_welcome
-- utter_default
 - utter_ack_dosearch
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - action_search_movie
 - action_search_year
+- action_search_director
+- action_search_actor
+- action_search_gross
+- action_search_country
+- action_search_color
+- action_search_budget
+- action_search_rating
+- action_search_duration
+- action_search_language
+- action_search_genres
+- action_search_actors_list
+- action_search_movies_list
+- action_cannot_do_this
 actions:
 - utter_greet
 - utter_goodbye
 - utter_welcome
-- utter_default
 - utter_ack_dosearch
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - actions.ActionSearchMovie
 - actions.ActionSearchYear
+- actions.ActionSearchDirector
+- actions.ActionSearchActor
+- actions.ActionSearchGross
+- actions.ActionSearchCountry
+- actions.ActionSearchColor
+- actions.ActionSearchBudget
+- actions.ActionSearchRating
+- actions.ActionSearchRuntime
+- actions.ActionSearchLanguage
+- actions.ActionSearchGenre
+- actions.ActionSearchActorsList
+- actions.ActionSearchMoviesList
+- actions.ActionCannotDoThis
 config:
   store_entities_as_slots: true
 entities:
@@ -41,18 +65,30 @@ entities:
 intents:
 - greet
 - goodbye
-- ask_question
-- search_movie
-- search_director
-- search_producer
-- search_year
-- search_actors
-- search_country
-- search_gross
-- search_budget
+- nothing
+- movie
+- movie_name
+- director
+- director_name
+- year
+- release_date
+- date
+- actor
+- actor_name
+- movie_count
+- genre
+- country
+- language
+- gross
+- revenue
+- budget
+- rating
+- serach_star_rating
+- runtime
 - thankyou
 - affirm
 - deny
+- person
 slots:
   actor_name:
     initial_value: null
@@ -69,38 +105,35 @@ slots:
   country:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  director_name:
+  director:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  duration:
-    initial_value: null
-    type: rasa_core.slots.TextSlot
-  genres:
+  genre:
     initial_value: null
     type: rasa_core.slots.TextSlot
   gross:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  imdb_score:
+  language:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  plot_keywords:
+    initial_value: null
+    type: rasa_core.slots.ListSlot
+  runtime:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  score:
     initial_value: null
     max_value: 1.0
     min_value: 0.0
     type: rasa_core.slots.FloatSlot
-  language:
+  title:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  movie:
+  year:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  movie_year:
-    initial_value: null
-    type: rasa_core.slots.TextSlot
-  movies:
-    initial_value: null
-    type: rasa_core.slots.ListSlot
-  plot_keywords:
-    initial_value: null
-    type: rasa_core.slots.ListSlot
 templates:
   utter_ack_dosearch:
   - text: Wait here while I search in my memory palace

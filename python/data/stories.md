@@ -6,7 +6,7 @@
 
 # serach director's movies
 >check_asked_howcanhelp
-* search_movie {"director": "Spielberg"}
+* movie {"director": "Spielberg"}
     - utter_ack_dosearch
     - action_search_movie
 
@@ -14,11 +14,25 @@
 
 # search year of production
 > check_asked_howcanhelp
-* search_year {"movie": "The Matrix"}
+* year {"movie": "The Matrix"}
     - utter_ack_dosearch
     - action_search_year
 > check_showed_result
 
+# search director
+> check_asked_howcanhelp
+* director {"movie":"Spider-Man 3"}
+    - utter_ack_dosearch
+    - action_search_director
+> check_showed_result
+
+
+
+# end
 > check_showed_result
 * thankyou
     - utter_welcome
+
+
+* nothing
+    - action_listen

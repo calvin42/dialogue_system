@@ -2,15 +2,15 @@
   "action_fingerprints": {
     "action_listen": {
       "slots": [
-        "movie"
+        "director"
       ]
     }
-  },
-  "rasa_core": "0.9.0a3",
-  "max_history": 3,
-  "ensemble_name": "rasa_core.policies.ensemble.SimplePolicyEnsemble",
+  }, 
+  "ensemble_name": "rasa_core.policies.ensemble.SimplePolicyEnsemble", 
+  "max_history": 3, 
   "policy_names": [
-    "rasa_core.policies.memoization.MemoizationPolicy",
+    "rasa_core.policies.memoization.MemoizationPolicy", 
     "rasa_core.policies.keras_policy.KerasPolicy"
-  ]
+  ], 
+  "rasa_core": "0.9.0a3"
 }
