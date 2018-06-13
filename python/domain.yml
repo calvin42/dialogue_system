@@ -1,11 +1,45 @@
 slots:  # what do I need to keep track?
-  title:
+  movie.name:
     type: text
-  actor_name:
+  movie.description:
     type: text
-  actors_names:
-    type: list
-  director:
+  movie.genre:
+    type: text
+  movie.gross_revenue:
+    type: float
+  movie.language:
+    type: text
+  movie.location:
+    type: text
+  movie.release_date:
+    type: text
+  movie.release_region:
+    type: text
+  movie.star_rating:
+    type: float
+  movie.subject:
+    type: text
+  actor.name:
+    type: text
+  actor.nationality:
+    type: text
+  actor.type:
+    type: text
+  award.ceremony:
+    type: text
+  character.name:
+    type: text
+  director.name:
+    type: text
+  director.nationality:
+    type: text
+  person.name:
+    type: text
+  person.nationality:
+    type: text
+  producer.name:
+    type: text
+  rating.name:
     type: text
   year:
     type: text
@@ -15,7 +49,7 @@ slots:  # what do I need to keep track?
     type: text
   genre:
     type: text
-  country:
+  country.name:
     type: text
   language:
     type: text
@@ -29,11 +63,28 @@ slots:  # what do I need to keep track?
     type: float
 
 entities:
-  - movie
-  - actor_name
-  - actors_names
-  - director_name
-  - movie_year
+  - actor.name
+  - actor.nationality
+  - actor.type
+  - award.ceremony
+  - character.name
+  - country.name
+  - director.name
+  - director.nationality
+  - movie.description
+  - movie.genre
+  - movie.gross_revenue
+  - movie.language
+  - movie.location
+  - movie.name
+  - movie.release_date
+  - movie.release_region
+  - movie.star_rating
+  - movie.subject
+  - person.name
+  - person.nationality
+  - producer.name
+  - rating.name
   - budget
   - duration
   - genres
@@ -66,12 +117,12 @@ intents: # what a user proably mean to say
 - revenue
 - budget
 - rating 
-- serach_star_rating
+- star_rating
 - runtime
 - thankyou
 - affirm
 - deny
-- person
+- other
 
 templates:
   utter_greet:
@@ -94,6 +145,7 @@ templates:
   utter_ask_tochoose:
     - "I found more than one result"
 
+
 actions: # what my bot can do
 - utter_greet
 - utter_goodbye
@@ -102,6 +154,7 @@ actions: # what my bot can do
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
+
 - actions.ActionSearchMovie
 - actions.ActionSearchYear
 - actions.ActionSearchDirector
@@ -117,3 +170,4 @@ actions: # what my bot can do
 - actions.ActionSearchActorsList
 - actions.ActionSearchMoviesList
 - actions.ActionCannotDoThis
+- actions.ActionShowActionsList

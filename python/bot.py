@@ -8,6 +8,7 @@ from rasa_core.actions import Action
 from rasa_core.agent import Agent
 from rasa_core.events import SlotSet
 from rasa_core.channels import HttpInputChannel
+from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.channels.telegram import TelegramInput
 from rasa_core.policies.memoization import MemoizationPolicy
 from rasa_core.policies.keras_policy import KerasPolicy
@@ -26,9 +27,9 @@ def train_dialogue():
     domain_file = "domain.yml"
     model_path="model/dialogue"
     training_data = "data/stories.md"
-    agent = Agent(domain_file, policies=[MemoizationPolicy(), KerasPolicy()])
+    agent = Agent(domain_file, policies=[KerasPolicy()])
 
-    agent.train(training_data, max_history=3, epochs=400, batch_size=100, validation_split=0.2)
+    agent.train(training_data, max_history=3, epochs=1000, batch_size=100, validation_split=0.2)
 
     agent.persist(model_path)
     
@@ -47,38 +48,49 @@ def train_nlu():
 
     return model_directory
 
+def get_input_channel(ip=None):
+    if ip is not None:
+        input_channel = TelegramInput(
+            access_token="583835183:AAF9oo9QpLzWS7I_IQ4f_j0Um-HzH6TK9n4", # you get this when setting up a bot
+            verify="KerovAssistantBot", # this is your bots username
+            webhook_url="https://"+ ip +".ngrok.io/webhook" # the url your bot should listen for messages
+        )
+    else:
+        input_channel = ConsoleInputChannel()
+    return input_channel
 
-# def run(serve_forever=True, domain_file="data/domain.yml", model_path="models/dialogue", training_data_file="data/babi_stories.md"):
-#     agent = Agent(domain_file, policies=[MemoizationPolicy()])
 
 def run(serve_forever=True):
 
     training_data_file = "data/stories.md"
-    domain_file = "domain.yml"
-    
-    agent = Agent(domain_file, interpreter=RegexInterpreter(), policies=[MemoizationPolicy(), KerasPolicy()])
 
-    agent = Agent.load("model/dialogue", interpreter=RegexInterpreter())
-    
-    ip = "1f7a3809"
+    interpreter = RasaNLUInterpreter("models/nlu/default/current")
 
-    input_channel = TelegramInput(
-        access_token="583835183:AAF9oo9QpLzWS7I_IQ4f_j0Um-HzH6TK9n4", # you get this when setting up a bot
-        verify="KerovAssistantBot", # this is your bots username
-        webhook_url="https://"+ ip +".ngrok.io/webhook" # the url your bot should listen for messages
+    agent = Agent.load("model/dialogue", interpreter=interpreter)
+    
+    input_channel = get_input_channel("2dcf037a")
+    # input_channel = get_input_channel()
+    
+    # agent.train_online(
+    #             training_data_file,
+    #             max_history=3,
+    #             epochs=1000,
+    #             batch_size=100
+    #     )
+
+    agent.train(
+            training_data_file,
+            max_history=3,
+            epochs=1000,
+            batch_size=100
     )
 
-    agent.train_online(
-                training_data_file,
-                max_history=3,
-                epochs=400,
-                batch_size=100
-        )
-
     agent.handle_channel(HttpInputChannel(5004,"/", input_channel))
+    # agent.handle_channel(input_channel)
 
     return agent
 
+utils.configure_colored_logging(loglevel="INFO")
 
 # train_nlu()
 # train_dialogue()

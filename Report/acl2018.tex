@@ -1,0 +1,74 @@
+%
+% File acl2018.tex
+%
+%% Based on the style files for ACL-2017, with some changes, which were, in turn,
+%% Based on the style files for ACL-2015, with some improvements
+%%  taken from the NAACL-2016 style
+%% Based on the style files for ACL-2014, which were, in turn,
+%% based on ACL-2013, ACL-2012, ACL-2011, ACL-2010, ACL-IJCNLP-2009,
+%% EACL-2009, IJCNLP-2008...
+%% Based on the style files for EACL 2006 by 
+%%e.agirre@ehu.es or Sergi.Balari@uab.es
+%% and that of ACL 08 by Joakim Nivre and Noah Smith
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[hyperref]{acl2018}
+\usepackage{times}
+\usepackage{latexsym}
+
+\usepackage{url}
+
+%\aclfinalcopy % Uncomment this line for the final submission
+%\def\aclpaperid{***} %  Enter the acl Paper ID here
+
+%\setlength\titlebox{5cm}
+% You can expand the titlebox if you need extra space
+% to show all the authors. Please do not make the titlebox
+% smaller than 5cm (the original size); we will check this
+% in the camera-ready version and ask you to change it back.
+
+\newcommand\BibTeX{B{\sc ib}\TeX}
+
+\title{Language Understanding Systems --- Final project - 
+Dialog System within rasa framework in movie domain}
+
+\author{Claudio Kerov Ghiglianovich \\
+  {\tt c.kerovghiglianovich@studenti.unitn.it}}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\section{Introduction}
+The objective of the final project is to create a dialogue system with \textit{rasa} framework in movie domain. In short words, create a question answering bot about movies. In addition to that, the bot is connected to a speech service in order to get questions from the users' voice and to give answers through a speech synthesizer.
+
+\section{Rasa data and files}
+\textit{Rasa} needs different files for training:
+\begin{itemize}
+	\item domain information
+	\item stories for dialogue training
+	\item data for NLU training
+\end{itemize}
+\subsection{From NL-SPARQL dataset to NLU Data Format}
+The first file created for the project was the one containing data for the NLU training. The data format for NLU training is a JSON file containing the text, the intent and the entities, if there are any. Hence, the starting dataset, which is the same of the previous project, needed to be modified and to do so it was created a script in python that makes the conversion. 
+\subsubsection{Entities}
+An \textbf{entity}, in the rasa format, is a set of one or more words referable to a specific concept. The concept is the entity and the value of the entity is the set of words. 
+The original dataset is formed by many sentences. Each sentence is divided by words and each word is in one line with the related IOB-tag. The IOB-tags may start with one of these letters: I, O or B. ''O'' stands for ''Outside the span'', while ''B'' is ''Beginning of span'' and ''I'' is ''Inside of span''. The ''O''-ones are not important for this task, because they don't carry any important information for the classifier. ''B'' and ''I'' tags, though, indicate that the related word has an important meaning. For instance, the words refer to a movie or to an actor. The script collect all the words until the ''\textbackslash n'', which signals the end of the sentence, and put all in the right place:
+\begin{itemize}
+	\item the sentence in the text field
+	\item the entities in the entities list
+\end{itemize}
+For each entity it computes the start and the end of the entity values.
+\subsubsection{Intents}
+The \textbf{intent} describes what the users probably meant to say, so the users' intent, literally.
+
+
+% include your own bib file like this:
+%\bibliographystyle{acl}
+%\bibliography{acl2018}
+%\bibliography{acl2018}
+%\bibliographystyle{acl_natbib}
+
+\end{document}

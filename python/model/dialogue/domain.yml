@@ -22,6 +22,7 @@ action_names:
 - action_search_actors_list
 - action_search_movies_list
 - action_cannot_do_this
+- action_show_actions_list
 actions:
 - utter_greet
 - utter_goodbye
@@ -45,14 +46,32 @@ actions:
 - actions.ActionSearchActorsList
 - actions.ActionSearchMoviesList
 - actions.ActionCannotDoThis
+- actions.ActionShowActionsList
 config:
   store_entities_as_slots: true
 entities:
-- movie
-- actor_name
-- actors_names
-- director_name
-- movie_year
+- actor.name
+- actor.nationality
+- actor.type
+- award.ceremony
+- character.name
+- country.name
+- director.name
+- director.nationality
+- movie.description
+- movie.genre
+- movie.gross_revenue
+- movie.language
+- movie.location
+- movie.name
+- movie.release_date
+- movie.release_region
+- movie.star_rating
+- movie.subject
+- person.name
+- person.nationality
+- producer.name
+- rating.name
 - budget
 - duration
 - genres
@@ -89,23 +108,36 @@ intents:
 - affirm
 - deny
 - person
+- other
 slots:
-  actor_name:
+  actor.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  actors_names:
+  actor.nationality:
     initial_value: null
-    type: rasa_core.slots.ListSlot
+    type: rasa_core.slots.TextSlot
+  actor.type:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  award.ceremony:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
   budget:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  character.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
   color:
     initial_value: null
     type: rasa_core.slots.BooleanSlot
-  country:
+  country.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  director:
+  director.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  director.nationality:
     initial_value: null
     type: rasa_core.slots.TextSlot
   genre:
@@ -117,9 +149,55 @@ slots:
   language:
     initial_value: null
     type: rasa_core.slots.TextSlot
+  movie.description:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.genre:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.gross_revenue:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  movie.language:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.location:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.release_date:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.release_region:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.star_rating:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  movie.subject:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  person.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  person.nationality:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
   plot_keywords:
     initial_value: null
     type: rasa_core.slots.ListSlot
+  producer.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  rating.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
   runtime:
     initial_value: null
     type: rasa_core.slots.TextSlot
@@ -128,9 +206,6 @@ slots:
     max_value: 1.0
     min_value: 0.0
     type: rasa_core.slots.FloatSlot
-  title:
-    initial_value: null
-    type: rasa_core.slots.TextSlot
   year:
     initial_value: null
     type: rasa_core.slots.TextSlot

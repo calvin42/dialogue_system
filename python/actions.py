@@ -20,14 +20,40 @@ from rasa_core.policies.memoization import MemoizationPolicy
 
 
 from database_manager import MovieBuff
+import time
+
+logger = logging.getLogger(__name__)
 
 URI = "mysql://lus:lus@localhost:3306/lus"
 slots = ["title", "actor_name", "actors_names", "director", 
         "year", "budget", "runtime", "genre", "country", 
         "language", "gross", "color", "score"
 ]
-
-
+cantdo = [
+    "person",
+    "subjects",
+    "character",
+    "birth_date",
+    "composer",
+    "producer_count",
+    "producer",
+    "organization",
+    "person_name",
+    "writer",
+    "movie_other",
+    "other",
+    "award",
+    "award_ceremony",
+    "award_category",
+    "media",
+    "trailer",
+    "picture",
+    "review",
+    "synopsis",
+    "theater",
+    "award_category_count",
+    "award_count"
+]
 #############################################################################################
 #                                                                                           #
 #                                                                                           #
@@ -54,44 +80,83 @@ class ActionSearchMovie(Action):
         result = movie_buff.get_movie(**current_slots)
         return [SlotSet("movie", result.first())]
 
-class ActionSearchYear(Action):
-    def name(self):
-        return "action_search_year"
-    
-    def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message("I'm searching the year of production")
-        movie = tracker.get_slot("movie")
-        if movie is None:
-            dispatcher.utter_message("You didn't provide any movie to search for")
-        movie_buff = MovieBuff(URI)
-        result = movie_buff.get_year(title=movie)
-        if result is None:
-            dispatcher.utter_message("I'm sorry, I searched everywhere but I found nothing")
-        else:
-            return [SlotSet("year",  str(result))]
-
-
 class ActionSearchDirector(Action):
     def name(self):
         return "action_search_director"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("You didn't specified the movie!")
+        else:
+            movie_buff = MovieBuff(URI)
+            logger.debug("movie: "+movie)
+            result = movie_buff.get_director(movie)
+            logger.debug("Result: "+str(result))
+            if result is None:
+                dispatcher.utter_message("I'm sorry, I searched everywhere but I found nothing")
+            else:
+                dispatcher.utter_message("That's what I found")
+                dispatcher.utter_message(result)
+                return [SlotSet("director.name", result)]
+        
+
+class ActionSearchYear(Action):
+    def name(self):
+        return "action_search_year"
+    
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("I'm searching for the year of production")
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("You didn't provide any movie to search for")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_year(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, I searched everywhere but I found nothing")
+            else:
+                dispatcher.utter_message(result)
+                return [SlotSet("movie.release_date",  str(result))]
+
 
 class ActionSearchActor(Action):
     def name(self):
         return "action_search_actor"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("I didn't understand the name of the movie")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_actors(movie)
+            if result is None:
+                dispatcher.utter_message("Either this is a movie without actors or I got nothing in my database")
+            else:
+                if "|" in result:
+                    actor = result.split("|")[0]
+                else:
+                    actor = result
+                dispatcher.utter_message("Maybe "+actor+" is the actor you are looking for")
+                return [SlotSet("actor.name", actor)]
 
 class ActionSearchCountry(Action):
     def name(self):
         return "action_search_country"
     
     def run(self, dispatcher, tracker, domain):
-        pass
-
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("Sorry, what was the name?")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_country(movie)
+            if result is None:
+                dispatcher.utter_message("I guess it comes from nowhere, because I found nothing")
+            else:
+                disparcher.utter_message(movie+" was made in "+result)
+                return [SlotSet("movie.location", result)]
 
 class ActionSearchColor(Action):
     def name(self):
@@ -142,6 +207,13 @@ class ActionSearchGenre(Action):
     def run(self, dispatcher, tracker, domain):
         pass
 
+class ActionCannotDoThis(Action):
+    def name(self):
+        return "action_cannot_do_this"
+    
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_message("I'm sorry, but I'm afraid that I can't do that")
+        
 #############################################################################################
 #                                                                                           #
 #                                                                                           #
@@ -165,15 +237,29 @@ class ActionSearchMoviesList(Action):
     def run(self, dispatcher, tracker, domain):
         pass
 
-
-
-class ActionCannotDoThis(Action):
+class ActionShowActionsList(Action):
     def name(self):
-        return "action_cannot_do_this"
+        return "action_show_actions_list"
     
     def run(self, dispatcher, tracker, domain):
-        dispatcher.utter_message("I'm sorry, but I'm afraid that I can't do that")
-        
+        actions_list = ''' I can search many things about a specific movie:
+        \t- director
+        \t- production year
+        \t- three main actors
+        \t- gross
+        \t- production country
+        \t- color or black and white
+        \t- budget
+        \t- duration
+        \t- language spoken
+        \t- genre
+        \t- IMDb rating
+        Or I can show you a list of everything that I listed before, plus movies.
+        '''
+        dispatcher.utter_messagge(actions_list)
+
+
+
 '''
 class ActionSearch(Action):
     def name(self):

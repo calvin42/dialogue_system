@@ -34,9 +34,19 @@ def prepare_intents():
         for el in intents:
             f.write("search_"+el+"\n")
         
+def prepare_enties():
+    entities = []
 
-# train()
-label()
-prepare_intents()
+    for el in seen:
+        entities.append(el.split("-")[1])
+    entities.sort()
+    with open("slot.txt", "w") as f:
+        f.writelines(entities)
+        
+
+train()
+# label()
+# prepare_intents()
+prepare_enties()
 # with open("tags.txt", "w") as f:
     # f.writelines(seen)

@@ -1,42 +1,40 @@
-- search_actor
-- search_actor_name
-- search_budget
-- search_movie_count
-- search_country
-- search_director
-- search_movie
-- search_genre
-- search_director_name
-- search_release_date
-- search_movie_name
-- search_language
-- search_date
-- search_rating
-- search_revenue
-- search_subjects
-- search_star_rating
-- search_runtime
-------------------
-- search_person
-------------------
-- search_character
-- search_birth_date
-- search_composer
-- search_producer_count
-- search_producer
-- search_organization
-- search_person_name
-- search_writer
-- search_movie_other
-- search_other
-- search_award
-- search_award_ceremony
-- search_award_category
-- search_media
-- search_trailer
-- search_picture
-- search_review
-- search_synopsis
-- search_theater
-- search_award_category_count
-- search_award_count
+search_B-character.name
+search_B-movie.name
+search_I-movie.name
+search_B-actor.name
+search_I-actor.name
+search_I-character.name
+search_B-person.name
+search_I-person.name
+search_B-director.name
+search_I-director.name
+search_B-movie.release_date
+search_I-movie.release_date
+search_B-movie.location
+search_I-movie.location
+search_B-producer.name
+search_I-producer.name
+search_B-country.name
+search_I-country.name
+search_B-movie.genre
+search_B-movie.language
+search_B-rating.name
+search_I-rating.name
+search_B-movie.subject
+search_I-movie.language
+search_I-movie.subject
+search_I-movie.genre
+search_B-actor.type
+search_B-actor.nationality
+search_I-actor.nationality
+search_B-director.nationality
+search_B-movie.gross_revenue
+search_I-movie.gross_revenue
+search_B-person.nationality
+search_B-award.ceremony
+search_B-movie.release_region
+search_B-movie.description
+search_I-award.ceremony
+search_I-movie.release_region
+search_B-movie.star_rating
+search_B-award.category
