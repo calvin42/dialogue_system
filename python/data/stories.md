@@ -209,3 +209,44 @@
     - action_search_director
     - slot{"director.name": "James Cameron"}
     - export
+## Generated Story 5657499674078307932
+* movie
+    - utter_greet
+    - utter_ask_howcanhelp
+* director{"movie.name": "spider-man"}
+    - slot{"movie.name": "spider-man"}
+    - action_search_director
+    - slot{"director.name": "Sam Raimi"}
+* release_date{"movie.name": "spider-man"}
+    - slot{"movie.name": "spider-man"}
+    - action_search_year
+* release_date{"movie.name": "spider-man"}
+    - slot{"movie.name": "spider-man"}
+    - action_search_year
+    - export
+## Generated Story -1951248412566775693
+* other
+    - utter_greet
+    - utter_ask_howcanhelp
+* genre{"movie.name": "up?"}
+    - slot{"movie.name": "up?"}
+    - action_search_genres
+* revenue{"movie.name": "the avengers"}
+    - slot{"movie.name": "the avengers"}
+    - action_search_gross
+    - slot{"movie.gross_revenue": 623279547}
+* language{"movie.name": "la dolce vita?"}
+    - slot{"movie.name": "la dolce vita?"}
+    - action_search_language
+* runtime{"movie.name": "iron man"}
+    - slot{"movie.name": "iron man"}
+    - action_search_duration
+    - slot{"runtime": 195}
+* runtime{"director.name": "space odissey"}
+    - slot{"director.name": "space odissey"}
+    - action_search_duration
+    - slot{"runtime": 195}
+* nothing
+* goodbye
+    - utter_goodbye
+    - export

@@ -47,13 +47,9 @@ slots:  # what do I need to keep track?
     type: text
   runtime:
     type: text
-  genre:
-    type: text
   country.name:
     type: text
   language:
-    type: text
-  gross:
     type: text
   color:
     type: bool
@@ -123,6 +119,7 @@ intents: # what a user proably mean to say
 - affirm
 - deny
 - other
+- media
 
 templates:
   utter_greet:
@@ -161,7 +158,7 @@ actions: # what my bot can do
 - actions.ActionSearchActor
 - actions.ActionSearchGross
 - actions.ActionSearchCountry
-- actions.ActionSearchColor
+# - actions.ActionSearchColor
 - actions.ActionSearchBudget
 - actions.ActionSearchRating
 - actions.ActionSearchRuntime

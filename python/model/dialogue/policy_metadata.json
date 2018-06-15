@@ -1,6 +1,6 @@
 {
   "action_fingerprints": {
-    "utter_goodbye": {
+    "action_search_year": {
       "slots": []
     }, 
     "action_listen": {
@@ -9,9 +9,11 @@
       ]
     }, 
     "action_search_director": {
-      "slots": []
+      "slots": [
+        "director.name"
+      ]
     }, 
-    "action_search_year": {
+    "utter_goodbye": {
       "slots": []
     }
   }, 

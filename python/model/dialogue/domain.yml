@@ -13,7 +13,6 @@ action_names:
 - action_search_actor
 - action_search_gross
 - action_search_country
-- action_search_color
 - action_search_budget
 - action_search_rating
 - action_search_duration
@@ -37,7 +36,6 @@ actions:
 - actions.ActionSearchActor
 - actions.ActionSearchGross
 - actions.ActionSearchCountry
-- actions.ActionSearchColor
 - actions.ActionSearchBudget
 - actions.ActionSearchRating
 - actions.ActionSearchRuntime
@@ -102,12 +100,11 @@ intents:
 - revenue
 - budget
 - rating
-- serach_star_rating
+- star_rating
 - runtime
 - thankyou
 - affirm
 - deny
-- person
 - other
 slots:
   actor.name:
@@ -138,12 +135,6 @@ slots:
     initial_value: null
     type: rasa_core.slots.TextSlot
   director.nationality:
-    initial_value: null
-    type: rasa_core.slots.TextSlot
-  genre:
-    initial_value: null
-    type: rasa_core.slots.TextSlot
-  gross:
     initial_value: null
     type: rasa_core.slots.TextSlot
   language:

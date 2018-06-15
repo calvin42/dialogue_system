@@ -14,12 +14,13 @@ from rasa_core.agent import Agent
 from rasa_core.channels import HttpInputChannel
 from rasa_core.channels.console import ConsoleInputChannel
 from rasa_core.channels.telegram import TelegramInput
-from rasa_core.events import SlotSet
+from rasa_core.events import SlotSet, AllSlotsReset, Restarted
 from rasa_core.interpreter import RasaNLUInterpreter, RegexInterpreter
 from rasa_core.policies.memoization import MemoizationPolicy
 
 
 from database_manager import MovieBuff
+from gtts import gTTS
 import time
 
 logger = logging.getLogger(__name__)
@@ -54,6 +55,24 @@ cantdo = [
     "award_category_count",
     "award_count"
 ]
+audio_folder = "/Users/claudio/CloudDrive/com~apple~CloudDocs/Magistrale/LUS/Part2/python/audio"
+
+class ActionRestarted(Action):
+    def name(self):
+        return "action_restarted"
+    
+    def run(self, dispatcher, tracker, domain):
+        return [Restarted()]
+
+class ActionAllSlotReset(Action):
+    def name(self):
+        return "action_slot_reset"
+
+    def run(self, dispatcher, tracker, domain):
+        return [AllSlotsReset()]
+
+
+
 #############################################################################################
 #                                                                                           #
 #                                                                                           #
@@ -83,8 +102,13 @@ class ActionSearchMovie(Action):
 class ActionSearchDirector(Action):
     def name(self):
         return "action_search_director"
-    
+
+    def resets_topic(self):
+        return True
+
     def run(self, dispatcher, tracker, domain):
+        # from telegram import Voice
+        # from mutagen.mp3 import MP3
         movie = tracker.get_slot("movie.name")
         if movie is None:
             dispatcher.utter_message("You didn't specified the movie!")
@@ -96,8 +120,16 @@ class ActionSearchDirector(Action):
             if result is None:
                 dispatcher.utter_message("I'm sorry, I searched everywhere but I found nothing")
             else:
-                dispatcher.utter_message("That's what I found")
-                dispatcher.utter_message(result)
+                answer = "The director of "+movie+" is "+result
+                # tts = gTTS(answer, lang='en')
+                # tts.save(audio_folder+"/message.mp3")
+
+                # audio = open(audio_folder+"/message.mp3", "rb")
+                # audio_len = MP3(audio_folder+"/message.mp3").info.length
+                # voice = Voice(audio, audio_len)
+                # dispatcher.utter_audio(audio, answer)
+                dispatcher.utter_message(answer)
+
                 return [SlotSet("director.name", result)]
         
 
@@ -116,7 +148,9 @@ class ActionSearchYear(Action):
             if result is None:
                 dispatcher.utter_message("I'm sorry, I searched everywhere but I found nothing")
             else:
-                dispatcher.utter_message(result)
+                year = str(result)
+                answer = "This movie was made in "+year
+                dispatcher.utter_message(answer)
                 return [SlotSet("movie.release_date",  str(result))]
 
 
@@ -155,57 +189,132 @@ class ActionSearchCountry(Action):
             if result is None:
                 dispatcher.utter_message("I guess it comes from nowhere, because I found nothing")
             else:
-                disparcher.utter_message(movie+" was made in "+result)
+                dispatcher.utter_message(movie+" was made in "+result)
                 return [SlotSet("movie.location", result)]
 
-class ActionSearchColor(Action):
-    def name(self):
-        return "action_search_color"
+# class ActionSearchColor(Action):
+    # def name(self):
+    #     return "action_search_color"
     
-    def run(self, dispatcher, tracker, domain):
-        pass
+    # def run(self, dispatcher, tracker, domain):
+    #     movie = tracker.get_slot("movie.name")
+    #     if movie is None:
+    #         dispatcher.utter_message("Sorry, what was the name?")
+    #     else:
+    #         movie_buff = MovieBuff(URI)
+    #         result = movie_buff.get_color(movie)
+    #         if result is None:
+    #             dispatcher.utter_message("I'm sorry, but I don't know :(")
+    #         else:
+    #             dispatcher.utter_message()
 
 class ActionSearchBudget(Action):
     def name(self):
         return "action_search_budget"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("Sorry, what was the name?")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_budget(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, but I don't know :(")
+            else:
+                dispatcher.utter_message("The budget for this movie was "+str(result)+"$")
+                return [SlotSet("budget", result)]
 
 class ActionSearchRating(Action):
     def name(self):
         return "action_search_rating"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("Sorry, what was the name?")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_rating(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, but I don't know :(")
+            else:
+                dispatcher.utter_message("WIP")
+                return []
 
 class ActionSearchRuntime(Action):
     def name(self):
         return "action_search_duration"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("I didn't get the name of the movie")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_runtime(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, but I don't know :(")
+            else:
+                dispatcher.utter_message(movie+" last "+str(result)+" minutes")
+                return [SlotSet("runtime", result)]
 
 class ActionSearchLanguage(Action):
     def name(self):
         return "action_search_language"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("Sorry, what was the name?")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_language(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, but I don't know :(")
+            else:
+                dispatcher.utter_message(movie+" was filmed in "+result.lower())
+                result [SlotSet("language", result)]
 
 class ActionSearchGross(Action):
     def name(self):
         return "action_search_gross"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("Sorry, what was the name?")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_gross(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, but I don't know :(")
+            else:
+                dispatcher.utter_message("This movie earned "+str(result)+"$")
+                return [SlotSet("movie.gross_revenue", result)]
 
 class ActionSearchGenre(Action):
     def name(self):
         return "action_search_genres"
     
     def run(self, dispatcher, tracker, domain):
-        pass
+        vowels = ["a", "e", "i", "o", "u"]
+        movie = tracker.get_slot("movie.name")
+        if movie is None:
+            dispatcher.utter_message("Sorry, what was the name?")
+        else:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_genre(movie)
+            if result is None:
+                dispatcher.utter_message("I'm sorry, but I don't know :(")
+            else:
+                genre = result.split("|")[0]
+                if genre[0].lower() in vowels:
+                    article = "an"
+                else: 
+                    article = "a"
+                dispatcher.utter_message(movie+" is "+article+" movie")
+                return [SlotSet("movie.genre", genre)]
 
 class ActionCannotDoThis(Action):
     def name(self):
@@ -248,7 +357,6 @@ class ActionShowActionsList(Action):
         \t- three main actors
         \t- gross
         \t- production country
-        \t- color or black and white
         \t- budget
         \t- duration
         \t- language spoken

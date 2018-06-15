@@ -68,25 +68,25 @@ def run(serve_forever=True):
 
     agent = Agent.load("model/dialogue", interpreter=interpreter)
     
-    input_channel = get_input_channel("2dcf037a")
-    # input_channel = get_input_channel()
+    # input_channel = get_input_channel("22af799c")
+    input_channel = get_input_channel()
     
-    # agent.train_online(
-    #             training_data_file,
-    #             max_history=3,
-    #             epochs=1000,
-    #             batch_size=100
-    #     )
+    agent.train_online(
+                training_data_file,
+                max_history=3,
+                epochs=1000,
+                batch_size=100
+        )
 
-    agent.train(
-            training_data_file,
-            max_history=3,
-            epochs=1000,
-            batch_size=100
-    )
+    # agent.train(
+    #         training_data_file,
+    #         max_history=3,
+    #         epochs=100,
+    #         batch_size=100
+    # )
 
-    agent.handle_channel(HttpInputChannel(5004,"/", input_channel))
-    # agent.handle_channel(input_channel)
+    # agent.handle_channel(HttpInputChannel(5004,"/", input_channel))
+    agent.handle_channel(input_channel)
 
     return agent
 
