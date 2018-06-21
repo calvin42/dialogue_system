@@ -1,6 +1,7 @@
 from log_lib import print_log
 from sqlalchemy import or_, and_
 import logging
+import difflib
 import sqlsoup
 import sys
 
@@ -37,6 +38,8 @@ class MovieBuff:
             v = kwargs[k]
             if v is not None:
                 if k == "title":
+                    if v[-1] == "?" or v[-1]== "!":
+                        v = v[:-1]
                     select = and_(select, self.movie.title.ilike("%"+v+"%"))
                     if not at_least_one:
                         at_least_one = not at_least_one
@@ -86,12 +89,29 @@ class MovieBuff:
 
 
     def get_movie(self, **kwargs):
+        # Type (**kwargs) -> List
         select = self.build_select_filter_movie(**kwargs)
         if select is not None:
-            result = self.movie.filter(select).first()
+            result = self.movie.filter(select).all()
             return result
         else:
             return None
+
+
+    def check_list(self, results, title):
+        # Type(List, Text) -> Text
+        match = {}
+        for result in results:
+            match[result.title] = result
+
+        res = difflib.get_close_matches(title, match.keys())
+        if len(res) > 0:
+            best = res[0]
+            return match[best]
+        else:
+            return None
+
+
 
  
 ##############################################################################
@@ -120,7 +140,9 @@ class MovieBuff:
     def get_director(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.director
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.director
         return None
     #############################
     #            YEAR           #
@@ -128,7 +150,9 @@ class MovieBuff:
     def get_year(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.year
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.year
         return None
     #############################
     #           ACTORS          #
@@ -136,7 +160,9 @@ class MovieBuff:
     def get_actors(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.actors
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.actors
         return None
     #############################
     #          COUNTRY          #
@@ -144,7 +170,9 @@ class MovieBuff:
     def get_country(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.country
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.country
         return None
     #############################
     #           COLOR           #
@@ -152,7 +180,9 @@ class MovieBuff:
     def get_color(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.color
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.color
         return None
     #############################
     #           BUDGET          #
@@ -160,7 +190,9 @@ class MovieBuff:
     def get_budget(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.budget
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.budget
         return None
     #############################
     #           RATING          #
@@ -168,7 +200,9 @@ class MovieBuff:
     def get_rating(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.imdb_score
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.rating
         return None
     #############################
     #          RUNTIME          #
@@ -176,7 +210,9 @@ class MovieBuff:
     def get_runtime(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.duration
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.duration
         return None
     #############################
     #           LANGUAGE           #
@@ -184,7 +220,9 @@ class MovieBuff:
     def get_language(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.language
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.language
         return None
     #############################
     #           GROSS           #
@@ -192,7 +230,9 @@ class MovieBuff:
     def get_gross(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.gross
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.gross
         return None
     #############################
     #           GENRE           #
@@ -200,7 +240,9 @@ class MovieBuff:
     def get_genre(self, title):
         result = self.get_movie(title=title)
         if result is not None:
-            return result.genres
+            check = self.check_list(result, title)
+            if check is not None:
+                return check.genres
         return None
 
 

@@ -1,0 +1,92 @@
+* person
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* subjects
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* character
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* birth_date
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* composer
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* producer_count
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* producer
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* organization
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* person_name
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* writer
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* movie_other
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* other
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* award
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* award_ceremony
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* award_category
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* media
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* trailer
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* picture
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* review
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* synopsis
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* theater
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* award_category_count
+	- utter_cant_do_this
+	- utter_howcanhelp
+
+* award_count
+	- utter_cant_do_this
+	- utter_howcanhelp
+

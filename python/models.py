@@ -3,7 +3,7 @@
     creo entity
     tag O = controllo se entity ha un tag: si-> entity aggiunta alla lista | no -> niente
     tag B = controllo se entity ha un tag: si-> entity aggiunta alla lista e creo nuova entity | no -> aggiungo tag all'entity
-    tag I = controllo blabla: si -> se eè lo stesso tag aggiungo value 
+    tag I = controllo blabla: si -> se e' lo stesso tag aggiungo value 
 '''
 
 class Entity():
@@ -23,10 +23,15 @@ class Entity():
         }
     
     def find_start_end(self, text):
-        i = text.index(self.value)
-        j = i + len(self.value)
-        self.start = i
-        self.end = j    
+        try:
+            i = text.index(self.value)
+            j = i + len(self.value)
+            self.start = i
+            self.end = j    
+        except:# Exception as err:
+            print (text)
+            print (self.value)
+            print(text.index(self.value))
 
 class Example():
     def __init__(self, text, intent, entities):

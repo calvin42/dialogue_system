@@ -1,0 +1,238 @@
+action_factory: null
+action_names:
+- utter_greet
+- utter_goodbye
+- utter_welcome
+- utter_ack_dosearch
+- utter_ack_findalternatives
+- utter_ask_howcanhelp
+- utter_ask_tochoose
+- utter_cant_do_this
+- action_search_movie
+- action_search_year
+- action_search_director
+- action_search_actor
+- action_search_gross
+- action_search_country
+- action_search_budget
+- action_search_rating
+- action_search_duration
+- action_search_language
+- action_search_genre
+- action_search_actors_list
+- action_search_movies_list
+- action_cannot_do_this
+- action_show_actions_list
+- action_is_title_right
+actions:
+- utter_greet
+- utter_goodbye
+- utter_welcome
+- utter_ack_dosearch
+- utter_ack_findalternatives
+- utter_ask_howcanhelp
+- utter_ask_tochoose
+- utter_cant_do_this
+- actions.ActionSearchMovie
+- actions.ActionSearchYear
+- actions.ActionSearchDirector
+- actions.ActionSearchActor
+- actions.ActionSearchGross
+- actions.ActionSearchCountry
+- actions.ActionSearchBudget
+- actions.ActionSearchRating
+- actions.ActionSearchRuntime
+- actions.ActionSearchLanguage
+- actions.ActionSearchGenre
+- actions.ActionSearchActorsList
+- actions.ActionSearchMoviesList
+- actions.ActionCannotDoThis
+- actions.ActionShowActionsList
+- actions.ActionAskIfRightTitle
+config:
+  store_entities_as_slots: true
+entities:
+- actor.name
+- actor.nationality
+- actor.type
+- award.ceremony
+- character.name
+- country.name
+- director.name
+- director.nationality
+- movie.description
+- movie.genre
+- movie.gross_revenue
+- movie.language
+- movie.location
+- movie.name
+- movie.release_date
+- movie.release_region
+- movie.star_rating
+- movie.subject
+- person.name
+- person.nationality
+- producer.name
+- rating.name
+- budget
+- duration
+- imdb_score
+intents:
+- greet
+- goodbye
+- nothing
+- movie_name
+- movie
+- director_name
+- release_date
+- actor_name
+- movie_count
+- genre
+- country
+- language
+- gross
+- budget
+- star_rating
+- runtime
+- thankyou
+- affirm
+- deny
+- other
+- actor_name_and_character
+- director_and_movie_name
+- director_and_producer
+- movie_and_date
+- movie_and_rating
+- movie_and_revenue
+- movie_and_producer
+- movie_and_language
+- movie_and_budget
+- movie_and_subjects
+- movie_and_director
+- producer_and_producer
+- award_ceremony_and_award_category
+- director_and_movie_and_date_and_star_rating
+- director_and_movie_and_star_rating
+- movie_and_media
+- movie_and_star_rating
+- movie_and_trailer
+- producer_and_picture
+- rating_and_star_rating
+- review_and_movie
+- review_and_rating
+slots:
+  actor.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  actor.nationality:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  actor.type:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  award.ceremony:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  character.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  color:
+    initial_value: null
+    type: rasa_core.slots.BooleanSlot
+  country.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  director.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  director.nationality:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  language:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.budget:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  movie.description:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.genre:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.gross:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  movie.language:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.location:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.release_date:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.release_region:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.runtime:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  movie.star_rating:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+  movie.subject:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  person.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  person.nationality:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  plot_keywords:
+    initial_value: null
+    type: rasa_core.slots.ListSlot
+  producer.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  rating.name:
+    initial_value: null
+    type: rasa_core.slots.TextSlot
+  score:
+    initial_value: null
+    max_value: 1.0
+    min_value: 0.0
+    type: rasa_core.slots.FloatSlot
+templates:
+  utter_ack_dosearch:
+  - text: Wait here while I search in my memory palace
+  - text: I'm searching, don't go away
+  utter_ack_findalternatives:
+  - text: Uhm, strange... I'll search for something else
+  - text: Oh, I must have confuse it with something else
+  utter_ask_howcanhelp:
+  - text: How can I help?
+  - text: Can I do something for you?
+  utter_ask_tochoose:
+  - text: I found more than one result
+  utter_cant_do_this:
+  - text: I'm sorry, but I can't do this
+  utter_default:
+  - text: default
+  utter_goodbye:
+  - text: Goodbye!
+  utter_greet:
+  - text: Hello
+  utter_welcome:
+  - text: You are welcome!
+topics: []

@@ -15,6 +15,42 @@ test_labels = "NLSPARQL.test.utt.labels.txt"
 
 # dbm = DatabaseManager(SQLALCHEMY_DATABASE_URI)
 
+cant = [
+    "other",
+    "media",
+    "info",
+    "birth_date",
+    "character",
+    "composer",
+    "producer_count",
+    "organization",
+    "person",
+    "person_name",
+    "producer",
+    "rating ",
+    "subjects",
+    "writer",
+    "movie_other",
+    "award",
+    "picture",
+    "review",
+    "synopsis",
+    "theater",
+    "trailer",
+    "award_count",
+    "award_category_count"
+]
+
+def transform_intent(intent):
+    if intent == "director":
+        return "director_name"
+    if intent == "actor":
+        return "actor_name"
+    if " " in intent:
+        intent = intent.replace(" ", "_and_")
+    elif intent in cant:
+        return "other"
+    return intent
 
 
 # devo:
@@ -39,7 +75,7 @@ with open(folder+train_data, "r") as tr:
 
                 cur_label = lb.readline()
                 ex.text = text
-                ex.intent = cur_label.split("\n")[0]
+                ex.intent = transform_intent(cur_label.split("\n")[0])
                 for ent in entities:
                     ent.find_start_end(ex.text)
                     ex.entities.append(ent)
@@ -51,7 +87,10 @@ with open(folder+train_data, "r") as tr:
 
             else:
                 word, tag = line.split("\t")
-                text = text + " " + word
+                if text == "":
+                    text = word
+                else:
+                    text = text + " " + word
                 tag = tag.split("\n")[0]
                 if tag == "O":
                     if cur_entity.entity is not None:
@@ -84,6 +123,11 @@ final_json = {
             "intent_examples": []
         }
     }
+with open("basic_intents.json") as f:
+    data = json.load(f)
+    for el in data:
+        final_json["rasa_nlu_data"]["common_examples"].append(el)
 
-with open(folder+"final.json", "w") as j:
+
+with open("exact.json", "w") as j:
     json.dump(final_json, j)

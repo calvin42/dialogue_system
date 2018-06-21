@@ -5,7 +5,7 @@ slots:  # what do I need to keep track?
     type: text
   movie.genre:
     type: text
-  movie.gross_revenue:
+  movie.gross:
     type: float
   movie.language:
     type: text
@@ -41,11 +41,9 @@ slots:  # what do I need to keep track?
     type: text
   rating.name:
     type: text
-  year:
-    type: text
-  budget:
-    type: text
-  runtime:
+  movie.budget:
+    type: float
+  movie.runtime:
     type: text
   country.name:
     type: text
@@ -83,12 +81,6 @@ entities:
   - rating.name
   - budget
   - duration
-  - genres
-  - country
-  - language
-  - gross
-  - color
-  - plot_keywords
   - imdb_score
 
 # should I add also the intent that I can't answer?
@@ -96,30 +88,50 @@ intents: # what a user proably mean to say
 - greet
 - goodbye
 - nothing
-- movie 
 - movie_name
-- director
+- movie
 - director_name
-- year 
 - release_date
-- date
-- actor
 - actor_name
 - movie_count
 - genre
 - country
 - language
 - gross
-- revenue
 - budget
-- rating 
 - star_rating
 - runtime
 - thankyou
 - affirm
 - deny
+# can't
 - other
-- media
+# combined
+- actor_name_and_character
+- director_and_movie_name
+- director_and_producer
+- movie_and_date
+- movie_and_rating
+- movie_and_revenue
+- movie_and_producer
+- movie_and_language
+- movie_and_budget
+- movie_and_subjects
+- movie_and_director
+- producer_and_producer
+- award_ceremony_and_award_category
+- director_and_movie_and_date_and_star_rating
+- director_and_movie_and_star_rating
+- movie_and_media
+- movie_and_star_rating
+- movie_and_trailer
+- producer_and_picture
+- rating_and_star_rating
+- review_and_movie
+- review_and_rating
+
+
+
 
 templates:
   utter_greet:
@@ -141,6 +153,8 @@ templates:
     - "Can I do something for you?"
   utter_ask_tochoose:
     - "I found more than one result"
+  utter_cant_do_this:
+    - "I'm sorry, but I can't do this"
 
 
 actions: # what my bot can do
@@ -151,14 +165,13 @@ actions: # what my bot can do
 - utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
-
+- utter_cant_do_this
 - actions.ActionSearchMovie
 - actions.ActionSearchYear
 - actions.ActionSearchDirector
 - actions.ActionSearchActor
 - actions.ActionSearchGross
 - actions.ActionSearchCountry
-# - actions.ActionSearchColor
 - actions.ActionSearchBudget
 - actions.ActionSearchRating
 - actions.ActionSearchRuntime
@@ -168,3 +181,4 @@ actions: # what my bot can do
 - actions.ActionSearchMoviesList
 - actions.ActionCannotDoThis
 - actions.ActionShowActionsList
+- actions.ActionAskIfRightTitle
