@@ -7,6 +7,7 @@
     }, 
     "action_listen": {
       "slots": [
+        "actor.name", 
         "movie.language", 
         "movie.name"
       ]
@@ -20,6 +21,9 @@
       "slots": [
         "actor.name"
       ]
+    }, 
+    "utter_goodbye": {
+      "slots": []
     }, 
     "action_search_country": {
       "slots": [
@@ -36,6 +40,9 @@
         "movie.release_date"
       ]
     }, 
+    "action_show_actions_list": {
+      "slots": []
+    }, 
     "action_search_genre": {
       "slots": [
         "movie.genre"
@@ -45,6 +52,12 @@
       "slots": [
         "movie.runtime"
       ]
+    }, 
+    "action_search_movie_and_revenue": {
+      "slots": []
+    }, 
+    "action_search_director_and_movie": {
+      "slots": []
     }, 
     "action_search_language": {
       "slots": [

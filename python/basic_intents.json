@@ -147,5 +147,17 @@
                 "text": "have a good one",
                 "intent": "goodbye",
                 "entities": []
+            },{
+                "text": "what can you do",
+                "intent": "info",
+                "entities": []
+            },{
+                "text": "show what you can do",
+                "intent": "info",
+                "entities": []
+            },{
+                "text": "do something",
+                "intent": "info",
+                "entities": []
             }
 ]

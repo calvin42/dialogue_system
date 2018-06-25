@@ -47,14 +47,8 @@ slots:  # what do I need to keep track?
     type: text
   country.name:
     type: text
-  language:
-    type: text
-  color:
-    type: bool
-  plot_keywords:
+  movie_list:
     type: list
-  score:
-    type: float
 
 entities:
   - actor.name
@@ -97,39 +91,19 @@ intents: # what a user proably mean to say
 - genre
 - country
 - language
-- gross
+- revenue
 - budget
-- star_rating
+- star_rating # risky
 - runtime
 - thankyou
 - affirm
 - deny
+- info
 # can't
 - other
 # combined
-- actor_name_and_character
-- director_and_movie_name
-- director_and_producer
-- movie_and_date
-- movie_and_rating
-- movie_and_revenue
-- movie_and_producer
-- movie_and_language
-- movie_and_budget
-- movie_and_subjects
+- movie_and_revenue 
 - movie_and_director
-- producer_and_producer
-- award_ceremony_and_award_category
-- director_and_movie_and_date_and_star_rating
-- director_and_movie_and_star_rating
-- movie_and_media
-- movie_and_star_rating
-- movie_and_trailer
-- producer_and_picture
-- rating_and_star_rating
-- review_and_movie
-- review_and_rating
-
 
 
 
@@ -162,7 +136,6 @@ actions: # what my bot can do
 - utter_goodbye
 - utter_welcome
 - utter_ack_dosearch
-- utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - utter_cant_do_this
@@ -182,3 +155,5 @@ actions: # what my bot can do
 - actions.ActionCannotDoThis
 - actions.ActionShowActionsList
 - actions.ActionAskIfRightTitle
+- actions.ActionShowDirectorsMovies
+- actions.ActionSearchMovieAndRevenue

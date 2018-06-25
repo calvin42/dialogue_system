@@ -1,5 +1,6 @@
 from log_lib import print_log
 from sqlalchemy import or_, and_
+from  sqlalchemy.sql.expression import func
 import logging
 import difflib
 import sqlsoup
@@ -87,6 +88,11 @@ class MovieBuff:
             return select
         return None
 
+
+    
+    def get_directors(self, n):
+        return [movie.director for movie in self.movie.order_by(func.random()).all()[:n]]
+    
 
     def get_movie(self, **kwargs):
         # Type (**kwargs) -> List
@@ -177,13 +183,13 @@ class MovieBuff:
     #############################
     #           COLOR           #
     #############################
-    def get_color(self, title):
-        result = self.get_movie(title=title)
-        if result is not None:
-            check = self.check_list(result, title)
-            if check is not None:
-                return check.color
-        return None
+    # def get_color(self, title):
+    #     result = self.get_movie(title=title)
+    #     if result is not None:
+    #         check = self.check_list(result, title)
+    #         if check is not None:
+    #             return check.color
+    #     return None
     #############################
     #           BUDGET          #
     #############################
@@ -202,7 +208,7 @@ class MovieBuff:
         if result is not None:
             check = self.check_list(result, title)
             if check is not None:
-                return check.rating
+                return check.imdb_score
         return None
     #############################
     #          RUNTIME          #
@@ -245,12 +251,20 @@ class MovieBuff:
                 return check.genres
         return None
 
+    def get_directors_movies(self):
+        result ={}
+        directors = self.get_directors(3)
+        for director in directors:
+            result[director] = self.get_movie(director=director)[:4]
+        if len(result) > 0:
+            return result
+        return None
 
-#TODO implementare la ricerca nel db dei film, dei registi etc
- 
-# class MovieBuff:
-#     def __init__(self, uri):
-#         self.dbm = DatabaseManager(uri)
-#         self.dbm.movie
-
+    def get_movies_revenues(self, **infos):
+        results = None
+        if infos is None:
+            results = self.movie.order_by(func.random()).all()[:10]
+        else:
+            results = self.get_movie(**infos)
+        return results
 

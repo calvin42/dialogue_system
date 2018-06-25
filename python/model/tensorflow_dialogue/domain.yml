@@ -4,7 +4,6 @@ action_names:
 - utter_goodbye
 - utter_welcome
 - utter_ack_dosearch
-- utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - utter_cant_do_this
@@ -24,12 +23,13 @@ action_names:
 - action_cannot_do_this
 - action_show_actions_list
 - action_is_title_right
+- action_search_director_and_movie
+- action_search_movie_and_revenue
 actions:
 - utter_greet
 - utter_goodbye
 - utter_welcome
 - utter_ack_dosearch
-- utter_ack_findalternatives
 - utter_ask_howcanhelp
 - utter_ask_tochoose
 - utter_cant_do_this
@@ -49,6 +49,8 @@ actions:
 - actions.ActionCannotDoThis
 - actions.ActionShowActionsList
 - actions.ActionAskIfRightTitle
+- actions.ActionShowDirectorsMovies
+- actions.ActionSearchMovieAndRevenue
 config:
   store_entities_as_slots: true
 entities:
@@ -90,36 +92,17 @@ intents:
 - genre
 - country
 - language
-- gross
+- revenue
 - budget
 - star_rating
 - runtime
 - thankyou
 - affirm
 - deny
+- info
 - other
-- actor_name_and_character
-- director_and_movie_name
-- director_and_producer
-- movie_and_date
-- movie_and_rating
 - movie_and_revenue
-- movie_and_producer
-- movie_and_language
-- movie_and_budget
-- movie_and_subjects
 - movie_and_director
-- producer_and_producer
-- award_ceremony_and_award_category
-- director_and_movie_and_date_and_star_rating
-- director_and_movie_and_star_rating
-- movie_and_media
-- movie_and_star_rating
-- movie_and_trailer
-- producer_and_picture
-- rating_and_star_rating
-- review_and_movie
-- review_and_rating
 slots:
   actor.name:
     initial_value: null
@@ -136,9 +119,6 @@ slots:
   character.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  color:
-    initial_value: null
-    type: rasa_core.slots.BooleanSlot
   country.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
@@ -146,9 +126,6 @@ slots:
     initial_value: null
     type: rasa_core.slots.TextSlot
   director.nationality:
-    initial_value: null
-    type: rasa_core.slots.TextSlot
-  language:
     initial_value: null
     type: rasa_core.slots.TextSlot
   movie.budget:
@@ -193,26 +170,21 @@ slots:
   movie.subject:
     initial_value: null
     type: rasa_core.slots.TextSlot
+  movie_list:
+    initial_value: null
+    type: rasa_core.slots.ListSlot
   person.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
   person.nationality:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  plot_keywords:
-    initial_value: null
-    type: rasa_core.slots.ListSlot
   producer.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
   rating.name:
     initial_value: null
     type: rasa_core.slots.TextSlot
-  score:
-    initial_value: null
-    max_value: 1.0
-    min_value: 0.0
-    type: rasa_core.slots.FloatSlot
 templates:
   utter_ack_dosearch:
   - text: Wait here while I search in my memory palace

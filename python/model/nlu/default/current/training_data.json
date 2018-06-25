@@ -1874,7 +1874,7 @@
             "entity": "movie.name"
           }
         ], 
-        "intent": "actor_name_and_character", 
+        "intent": "other", 
         "text": "show me who played what role in go"
       }, 
       {
@@ -5515,7 +5515,7 @@
       }, 
       {
         "text": "show me movies listed by directors", 
-        "intent": "director_and_movie_name"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -5974,7 +5974,7 @@
             "entity": "movie.name"
           }
         ], 
-        "intent": "director_and_producer", 
+        "intent": "other", 
         "text": "who made godzilla"
       }, 
       {
@@ -8567,7 +8567,7 @@
       }, 
       {
         "text": "find movies by release date", 
-        "intent": "movie_and_date"
+        "intent": "other"
       }, 
       {
         "text": "show movie ratings", 
@@ -10117,11 +10117,11 @@
       }, 
       {
         "text": "movies by producer", 
-        "intent": "movie_and_producer"
+        "intent": "other"
       }, 
       {
         "text": "find movies by producer", 
-        "intent": "movie_and_producer"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -11521,7 +11521,7 @@
       }, 
       {
         "text": "search for movies by language", 
-        "intent": "movie_and_language"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -11987,7 +11987,7 @@
       }, 
       {
         "text": "i 'm looking for the cost of some movies", 
-        "intent": "movie_and_budget"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -16583,7 +16583,7 @@
       }, 
       {
         "text": "need to provide more info about the movie content", 
-        "intent": "movie_and_subjects"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -24826,7 +24826,7 @@
             "entity": "movie.name"
           }
         ], 
-        "intent": "producer_and_producer", 
+        "intent": "other", 
         "text": "info hitch producer"
       }, 
       {
@@ -29186,7 +29186,7 @@
             "entity": "movie.release_date"
           }
         ], 
-        "intent": "movie_and_date", 
+        "intent": "other", 
         "text": "list release dates for all horror movies between 1995 and 2000"
       }, 
       {
@@ -36682,7 +36682,7 @@
             "entity": "person.name"
           }
         ], 
-        "intent": "award_ceremony_and_award_category", 
+        "intent": "other", 
         "text": "show richard lester 's awards"
       }, 
       {
@@ -36694,7 +36694,7 @@
             "entity": "person.name"
           }
         ], 
-        "intent": "award_ceremony_and_award_category", 
+        "intent": "other", 
         "text": "what awards has spielberg won"
       }, 
       {
@@ -36737,23 +36737,23 @@
       }, 
       {
         "text": "show me some of the greatest film directors of our time", 
-        "intent": "director_and_movie_and_date_and_star_rating"
+        "intent": "other"
       }, 
       {
         "text": "show me directors of famous films", 
-        "intent": "director_and_movie_and_star_rating"
+        "intent": "other"
       }, 
       {
         "text": "show me famous directors", 
-        "intent": "director_and_movie_and_star_rating"
+        "intent": "other"
       }, 
       {
         "text": "show me famous movie directors", 
-        "intent": "director_and_movie_and_star_rating"
+        "intent": "other"
       }, 
       {
         "text": "show me the top hollywood film directors of all time", 
-        "intent": "director_and_movie_and_star_rating"
+        "intent": "other"
       }, 
       {
         "text": "who are these directors", 
@@ -36882,7 +36882,7 @@
             "entity": "director.name"
           }
         ], 
-        "intent": "movie_and_media", 
+        "intent": "other", 
         "text": "show me videos of spielberg movies"
       }, 
       {
@@ -36894,7 +36894,7 @@
             "entity": "country.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what are the top five british dramas"
       }, 
       {
@@ -36906,7 +36906,7 @@
             "entity": "country.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what is the worst french film to date"
       }, 
       {
@@ -36918,7 +36918,7 @@
             "entity": "country.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what is the best french movie of all time"
       }, 
       {
@@ -36930,7 +36930,7 @@
             "entity": "country.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what are the top ten french movies of all time"
       }, 
       {
@@ -36942,7 +36942,7 @@
             "entity": "country.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what top movies are from the uk"
       }, 
       {
@@ -36954,7 +36954,7 @@
             "entity": "director.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "alfred hitchcock 's best films"
       }, 
       {
@@ -36966,7 +36966,7 @@
             "entity": "director.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what is alfred hitchcock 's most famous movie"
       }, 
       {
@@ -36978,7 +36978,7 @@
             "entity": "director.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "show me martin scorcese 's best movies"
       }, 
       {
@@ -36990,7 +36990,7 @@
             "entity": "director.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "show me a popular robert wise movie"
       }, 
       {
@@ -37002,7 +37002,7 @@
             "entity": "director.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what is the most popular steven spielberg movie"
       }, 
       {
@@ -37014,7 +37014,7 @@
             "entity": "movie.release_date"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "what are the top rated movies this year"
       }, 
       {
@@ -37032,7 +37032,7 @@
             "entity": "producer.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "show me the best films of twenty eleven for warner brothers"
       }, 
       {
@@ -37044,7 +37044,7 @@
             "entity": "rating.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "tell me some of the best nc-17 movies"
       }, 
       {
@@ -37056,7 +37056,7 @@
             "entity": "actor.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "adam sandler 's best movie list"
       }, 
       {
@@ -37068,20 +37068,20 @@
             "entity": "actor.name"
           }
         ], 
-        "intent": "movie_and_star_rating", 
+        "intent": "other", 
         "text": "brad pitt popular movies"
       }, 
       {
         "text": "give a list of best rated movies", 
-        "intent": "movie_and_star_rating"
+        "intent": "other"
       }, 
       {
         "text": "show me a set of movie trailers", 
-        "intent": "movie_and_trailer"
+        "intent": "other"
       }, 
       {
         "text": "show me movie trailers", 
-        "intent": "movie_and_trailer"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -37092,12 +37092,12 @@
             "entity": "producer.name"
           }
         ], 
-        "intent": "movie_and_trailer", 
+        "intent": "other", 
         "text": "preview paramount pictures clips"
       }, 
       {
         "text": "show me the movie highlights", 
-        "intent": "movie_and_trailer"
+        "intent": "other"
       }, 
       {
         "text": "display movies made in country", 
@@ -37951,7 +37951,7 @@
       }, 
       {
         "text": "show me pictures of movie producers", 
-        "intent": "producer_and_picture"
+        "intent": "other"
       }, 
       {
         "text": "who are the most famous producers in hollywood", 
@@ -37998,7 +37998,7 @@
             "entity": "movie.name"
           }
         ], 
-        "intent": "rating_and_star_rating", 
+        "intent": "other", 
         "text": "find rating information about the movie dredd"
       }, 
       {
@@ -38018,12 +38018,12 @@
             "entity": "movie.name"
           }
         ], 
-        "intent": "review_and_movie", 
+        "intent": "other", 
         "text": "get finding nemo info and reviews"
       }, 
       {
         "text": "parental review for movie", 
-        "intent": "review_and_rating"
+        "intent": "other"
       }, 
       {
         "entities": [
@@ -38814,6 +38814,26 @@
       {
         "text": "have a good one", 
         "intent": "goodbye"
+      }, 
+      {
+        "text": "what can you do", 
+        "intent": "info"
+      }, 
+      {
+        "text": "show what you can do", 
+        "intent": "info"
+      }, 
+      {
+        "text": "do something", 
+        "intent": "info"
+      }, 
+      {
+        "text": "thank you", 
+        "intent": "thankyou"
+      }, 
+      {
+        "text": "thanks", 
+        "intent": "thankyou"
       }
     ], 
     "entity_synonyms": [], 

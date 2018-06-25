@@ -1,0 +1,8 @@
+## Generated Story 7673144057422956782
+* greet
+    - utter_greet
+    - utter_ask_howcanhelp
+* movie{"actor.name": "sam raimi"}
+    - slot{"actor.name": "sam raimi"}
+    - action_search_movie_and_revenue
+    - export

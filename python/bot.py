@@ -1,3 +1,4 @@
+# encoding=utf8  
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -21,8 +22,11 @@ from rasa_core.interpreter import RasaNLUInterpreter, RegexInterpreter
 
 import argparse
 import logging
+import sys
 
 logger = logging.getLogger(__name__)
+reload(sys)  
+sys.setdefaultencoding('utf8')
 
 TRAINING_DATA = "exact.json"
 NLU_CONFIG = "data/config_nlu.yml"
@@ -57,10 +61,10 @@ def train_dialogue():
     # training_data = agent.load_data(STORIES)    
     training_data = STORIES    
     agent.train(training_data, epochs=100, batch_size=100, validation_split=0.2)
-    # agent.persist(MODEL_DIALOGUE)
-    agent.persist(MODEL_DIALOGUE_TENSORFLOW)
+    agent.persist(MODEL_DIALOGUE)
+    # agent.persist(MODEL_DIALOGUE_TENSORFLOW)
 
-    input_channel = get_input_channel()
+    # input_channel = get_input_channel()
     # agent.train_online(
     #             training_data,
     #             input_channel=input_channel,
@@ -84,22 +88,46 @@ def get_input_channel(ip=None):
 
 def run(serve_forever=True):
     # training_data_file = "data/stories.md"
-    # interpreter = RasaNLUInterpreter("models/nlu/default/current")
+    interpreter = RasaNLUInterpreter("model/nlu/default/current")
     # training_data = agent.load_data(STORIES)   
 
-    # agent = Agent.load(MODEL_DIALOGUE)#, interpreter=interpreter)
-    agent = Agent.load(MODEL_DIALOGUE_TENSORFLOW)#, interpreter=interpreter)
+    agent = Agent.load(MODEL_DIALOGUE, interpreter=interpreter)
+    # agent = Agent.load(MODEL_DIALOGUE_TENSORFLOW)#, interpreter=interpreter)
      
-    input_channel = get_input_channel()
-    agent.handle_channel(input_channel)
+    # input_channel = get_input_channel()
+    # agent.handle_channel(input_channel)
     
-    # input_channel = get_input_channel("22af799c")
-    # agent.handle_channel(HttpInputChannel(5004,"/", input_channel))
+    input_channel = get_input_channel("dda3ac6e")
+    agent.handle_channel(HttpInputChannel(5004,"/", input_channel))
 
     return agent
 
-utils.configure_colored_logging(loglevel="INFO")
+# utils.configure_colored_logging(loglevel="INFO")
 
-train_nlu()
-train_dialogue()
+# train_nlu()
+# train_dialogue()
 # run()
+
+if __name__ == '__main__':
+    utils.configure_colored_logging(loglevel="INFO")
+
+    parser = argparse.ArgumentParser(
+            description='starts the bot')
+
+    parser.add_argument(
+            'task',
+            choices=["train-nlu", "train-dialogue", "run"],
+            help="what the bot should do - e.g. run or train?")
+    task = parser.parse_args().task
+
+    # decide what to do based on first parameter of the script
+    if task == "train-nlu":
+        train_nlu()
+    elif task == "train-dialogue":
+        train_dialogue()
+    elif task == "run":
+        run()
+    else:
+        warnings.warn("Need to pass either 'train-nlu', 'train-dialogue' or "
+                      "'run' to use the script.")
+        exit(1)

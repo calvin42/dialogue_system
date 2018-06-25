@@ -27,9 +27,9 @@ import time
 logger = logging.getLogger(__name__)
 
 URI = "mysql://lus:lus@localhost:3306/lus"
-slots = ["title", "actor_name", "actors_names", "director", 
-        "year", "budget", "runtime", "genre", "country", 
-        "language", "gross", "color", "score"
+slots = ["movie.name", "actor.name", "movie.description", "director.name", 
+        "movie.release_date", "movie.budget", "movie.runtime", "movie.genre", "movie.location", 
+        "movie.language", "movie.gross", "movie.star_rating"
 ]
 
 audio_folder = "/Users/claudio/CloudDrive/com~apple~CloudDocs/Magistrale/LUS/Part2/python/audio"
@@ -43,6 +43,15 @@ def didnt_get_title():
     ]
     return random.choice(sentences)
 
+
+def get_used_slots(slots, tracker):
+    infos = {}
+    for slot in slots:
+        if tracker.get_slot(slot) is not None:
+            infos[slot] = tracker.get_slot(slot)
+    if len(infos.keys()) > 0:
+        return infos
+    return None
 
 class ActionRestarted(Action):
     def name(self):
@@ -97,10 +106,11 @@ class ActionSearchMovie(Action):
         # result = movie_buff.get_movie(director=director, movie=movie, producer=producer)
         result = movie_buff.get_titles(**current_slots)
         if result is None:
-            dispatcher.utter_message("No movie found")
+            dispatcher. utter_message("No movie found")
+            return []
         else:
             dispatcher.utter_message("I found this: "+result[0])
-        return [SlotSet("movie", result[0])]
+            return [SlotSet("movie", result[0])]
 
 class ActionSearchDirector(Action):
     def name(self):
@@ -242,8 +252,8 @@ class ActionSearchRating(Action):
             if result is None:
                 dispatcher.utter_message("I'm sorry, but I don't know :(")
             else:
-                dispatcher.utter_message("WIP")
-                return []
+                dispatcher.utter_message("The IMDb score for this movie is: "+str(result))
+                return [SlotSet("movie.star_rating", result)]
 
 class ActionSearchRuntime(Action):
     def name(self):
@@ -316,7 +326,7 @@ class ActionSearchGenre(Action):
                     article = "an"
                 else: 
                     article = "a"
-                dispatcher.utter_message(movie+" is "+article+" movie")
+                dispatcher.utter_message(movie+" is "+article+" "+genre+" movie")
                 return [SlotSet("movie.genre", genre)]
 
 class ActionCannotDoThis(Action):
@@ -326,12 +336,20 @@ class ActionCannotDoThis(Action):
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_message("I'm sorry, but I'm afraid that I can't do that")
 
-# class ActionAskMovieTitle(Action):
-#     def name(self):
-#         return "action_ask_movie_title"
+class ActionAskMovieTitle(Action):
+    def name(self):
+        return "action_movie_count"
         
-#     def run(self, dispatcher, tracker, domain:
-#         movie = tracker.get_slot("movie.name")
+    def run(self, dispatcher, tracker, domain):
+        infos = get_used_slots(slots, tracker)
+        if infos is not None:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_movie(**infos)
+            if result is not None:
+                dispatcher.utter_message(str(len(result))+" movies")
+            else:
+                dispatcher.utter_message("I got nothing, sorry")
+        return []
 
 #############################################################################################
 #                                                                                           #
@@ -372,32 +390,79 @@ class ActionSearchMoviesList(Action):
         return "action_search_movies_list"
     
     def run(self, dispatcher, tracker, domain):
-        infos = {}
-        for slot in slots:
-            if tracker.get_slot(slot) is not None:
-                infos[slot] = tracker.get_slot(slot)
-        if len(infos.keys()) > 0:
 
+        infos = get_used_slots(slots, tracker)
+        if infos is not None:
+            movie_buff = MovieBuff(URI)
+            result = movie_buff.get_movie(**infos)
+            if result is not None:
+                dispatcher.utter_message("I found these movies:")
+                for movie in result:
+                    dispatcher.utter_message("\t- "+movie.title)
+                return [SlotSet("movie_list", result)]
+        return []
 
 class ActionShowActionsList(Action):
     def name(self):
         return "action_show_actions_list"
     
     def run(self, dispatcher, tracker, domain):
-        actions_list = ''' I can search many things about a specific movie:
-        \t- director
-        \t- production year
-        \t- three main actors
-        \t- gross
-        \t- production country
-        \t- budget
-        \t- duration
-        \t- language spoken
-        \t- genre
-        \t- IMDb rating
-        Or I can show you a list of everything that I listed before, plus movies.
+        actions_list = '''I can search many things about a specific movie:
+\t- Director
+\t- Production year
+\t- Three main actors
+\t- Gross
+\t- Production country
+\t- Budget
+\t- Duration
+\t- Language spoken
+\t- Genre
+\t- IMDb rating
+\t- Some movies of some random directors
+\t- Revenues of specific or random movies
         '''
-        dispatcher.utter_messagge(actions_list)
+        dispatcher.utter_message(actions_list)
+        return []
+
+# director_and_movie_name
+
+class ActionShowDirectorsMovies(Action):
+    def name(self):
+        return "action_search_director_and_movie"
+    
+    def run(self, dispatcher, tracker, domain):
+        
+        movie_buff = MovieBuff(URI)
+        result = movie_buff.get_directors_movies()
+        if result is None:
+            dispatcher.utter_message("Sorry, something went wrong")
+        else:
+            dispatcher.utter_message("I selected a bunch of movies of three directors")
+            for el in result:
+                dispatcher.utter_message(el+":")
+                for movie in result[el]:
+                    dispatcher.utter_message("- "+movie.title)
+        return []
+
+class ActionSearchMovieAndRevenue(Action):
+    def name(self):
+        return "action_search_movie_and_revenue"
+    
+    def run(self, dispatcher, tracker, domain):
+        infos = get_used_slots(slots, tracker)
+        movie_buff = MovieBuff(URI)
+        if infos is None:
+            movies = movie_buff.get_movies_revenues(**infos)
+        else:
+            movies = movie_buff.get_movies_revenues(infos=None)
+        if movies is None:
+            dispatcher.utter_message("I got nothing :(")
+        else:
+            dispatcher.utter_message("Here are some results I found:")
+            for movie in movies:
+                logger.debug(movie)
+                dispatcher.utter_message(movie.title+": "+movie.gross+"$")
+        return []
 
 
 
