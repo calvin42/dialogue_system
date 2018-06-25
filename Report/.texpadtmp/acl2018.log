@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.6.15)  31 MAY 2018 12:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.6.15)  25 JUN 2018 17:43
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -246,36 +246,54 @@ LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 50.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.95> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 54.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 72.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 72.
+(Font)              <10.95> on input line 71.
  [1{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 72.
+Underfull \hbox (badness 1406) in paragraph at lines 83--84
+\OT1/ptm/m/n/10.95 in-tents (Tab. [][]2[][]) shows that the ma-jor-ity of
+ []
+
+
+Underfull \hbox (badness 1127) in paragraph at lines 83--84
+\OT1/ptm/m/n/10.95 from the NLU and so they were changed in
+ []
+
+
+Underfull \hbox (badness 1189) in paragraph at lines 86--87
+\OT1/ptm/m/n/10.95 di-vided in three dif-fer-ent func-tions, \OT1/ptm/m/it/10.95 train[]nlu\OT1/ptm/m/n/10.95 ,
+ []
+
+[2]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 157.
+ [3
+
+] [4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 157.
  (/Users/claudio/Downloads/instructions-acl-2018/.texpadtmp/acl2018.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 72.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 72.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 157.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 157.
 Package rerunfilecheck Info: File `acl2018.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 72.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 157.
  )
 (\end occurred when \iffalse on line 348 was incomplete) 
 Here is how much of TeX's memory you used:
- 5737 strings out of 493013
- 83500 string characters out of 6133343
- 175710 words of memory out of 5000000
- 9249 multiletter control sequences out of 15000+600000
+ 5755 strings out of 493013
+ 83717 string characters out of 6133343
+ 183815 words of memory out of 5000000
+ 9253 multiletter control sequences out of 15000+600000
  18525 words of font info for 44 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,10n,37p,739b,318s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 35i,10n,37p,1037b,328s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on /Users/claudio/Downloads/instructions-acl-2018/.texpadtmp/acl2018.pdf (1 page, 54835 bytes).
+Output written on /Users/claudio/Downloads/instructions-acl-2018/.texpadtmp/acl2018.pdf (4 pages, 74718 bytes).
 PDF statistics:
- 41 PDF objects out of 1000 (max. 8388607)
- 32 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
+ 68 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
+ 21 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

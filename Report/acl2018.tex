@@ -30,7 +30,7 @@
 \newcommand\BibTeX{B{\sc ib}\TeX}
 
 \title{Language Understanding Systems --- Final project - 
-Dialog System within rasa framework in movie domain}
+Dialog System within Rasa framework in movie domain}
 
 \author{Claudio Kerov Ghiglianovich \\
   {\tt c.kerovghiglianovich@studenti.unitn.it}}
@@ -42,27 +42,110 @@ Dialog System within rasa framework in movie domain}
 
 
 \section{Introduction}
-The objective of the final project is to create a dialogue system with \textit{rasa} framework in movie domain. In short words, create a question answering bot about movies. In addition to that, the bot is connected to a speech service in order to get questions from the users' voice and to give answers through a speech synthesizer.
+\qquad The objective of the final project is to create a dialogue system with \textit{Rasa} framework in movie domain. So, the bot needs to answer the users' questions and to keep track of the discussion in order to give additional information. The bot is developed in python and the database is MySQL.
 
 \section{Rasa data and files}
-\textit{Rasa} needs different files for training:
+\qquad Rasa is a framwork that allows to create and train a NLU and to create a dialogue manager that handle a conversation. To do so it is necessary to create three files that contain:
 \begin{itemize}
-	\item domain information
-	\item stories for dialogue training
-	\item data for NLU training
+	\item training data for the NLU;
+	\item information about the domain;
+	\item stories for dialogue training.
 \end{itemize}
 \subsection{From NL-SPARQL dataset to NLU Data Format}
-The first file created for the project was the one containing data for the NLU training. The data format for NLU training is a JSON file containing the text, the intent and the entities, if there are any. Hence, the starting dataset, which is the same of the previous project, needed to be modified and to do so it was created a script in python that makes the conversion. 
+\qquad The training file for the NLU is a JSON containing sentences, with the related intents and the entities, if there are any. Since the starting dataset is the same of the previous project, it needed some modifications. So, it was created a script in python that automatically makes the conversion from a format to the other. In this section are described the operations for the conversion.
 \subsubsection{Entities}
-An \textbf{entity}, in the rasa format, is a set of one or more words referable to a specific concept. The concept is the entity and the value of the entity is the set of words. 
-The original dataset is formed by many sentences. Each sentence is divided by words and each word is in one line with the related IOB-tag. The IOB-tags may start with one of these letters: I, O or B. ''O'' stands for ''Outside the span'', while ''B'' is ''Beginning of span'' and ''I'' is ''Inside of span''. The ''O''-ones are not important for this task, because they don't carry any important information for the classifier. ''B'' and ''I'' tags, though, indicate that the related word has an important meaning. For instance, the words refer to a movie or to an actor. The script collect all the words until the ''\textbackslash n'', which signals the end of the sentence, and put all in the right place:
-\begin{itemize}
-	\item the sentence in the text field
-	\item the entities in the entities list
-\end{itemize}
-For each entity it computes the start and the end of the entity values.
+\qquad An \textbf{entity}, in Rasa, is the meaning that a list of one or more words have for the bot in a specific domain. In this case an entity could be the name of a movie or a specific year. The original dataset is formed by many sentences and each sentence is divided in as many lines as the words. Each word has its corresponding IOB-tag. The tags can start with an I, an O or a B, respectively ``Inside of span``,``Outside the span`` and ``Beginning of span``. For this task the words with the tag ``O`` are not usefull, because they don't carry any important information for the NLU. However, the tags ``B`` and ``I`` mean that the related word is part of an entity or it is an entity itself. To extract an entity, the script reads every line until the ``\textbackslash n`` character, which signals the end of a sentence, and for every tag that encounters it creates the related entity. When the sentence is over and all the entities are extracted, it searches their position inside the sentence.
 \subsubsection{Intents}
-The \textbf{intent} describes what the users probably meant to say, so the users' intent, literally.
+\qquad At the end of a sentence the script looks also for the intent in the labels file, since the labels are the intent themselves, and it put it with the example inside a dictionary. An \textbf{intent} describes what the users probably want to know. Besides the labels, there are other intents listed in the domain file. These are represented by some examples written by hand or found in some tutorials by Rasa.
+
+\subsection{Domain information}
+\qquad The domain is a YAML file that contains:
+\begin{itemize}
+	\item slots
+	\item entities
+	\item intents
+	\item templates
+	\item actions
+\end{itemize}
+The entities and the intents are the same as in the training file. The information the bot needs to keep track is stored in the slots, which have a specific type such as ``text`` or ``list`` or ``float``. The actions are what the bot can actually do. So, an action can be just a simple answer to a greeting, in which case the action name starts with ``utter\_`` and the name of the action, or can be a more complex one. Even though the actions are listed in here, they are implemented in a \textit{python} file. At last, the templates are exactly the messages that the bot uses to answer the basic messages of the user.
+\subsection{Stories}
+\qquad The stories are the examples that the dialogue manager needs to learn how a conversation can take place. A story has in order: a title, the user's intent followed by zero or more entities and the bot's actions followed by the slot, if any were filled. To build a solid dialogue system can be useful to add some other intents after the bot actions, creating an example of full conversation. Starting from an initial set of stories written by hand, some others were added during testing phase with the online training method, which will be described in the paragraph ``Dialogue training`` in the third section.
+
+\section{Bot development}
+\qquad The assistant bot developed for this project has three main files, \textit{database\_manager.py}, \textit{bot.py} and \textit{actions.py}.
+\subsection{Database Manager}
+\qquad In order to get some answer for the user the bot needs to query the movie database and to do so it creates an object called MovieBuff, which is the class that has all the methods to query the database. There is a select query builder that takes in input an indefinite number of parameters and it build the query adding more conditions based on the parameters that have a value. Since the user can type the name of a movie in a wrong or incomplete way, or even if it is written without capital letters, a select that uses the equal operator is always returning zero rows. The ``LIKE`` operator solves this problem, but it returns a higher number of rows in which the correct result isn't always in the first line. Thus, before returning the result, the MovieBuff class calls a method that look for the closest match and it returns it.
+\subsection{Actions}
+\qquad The actions listed in the domain file are implemented in this file. They are all subclass of the Rasa class \textit{Action} and they have two methods that have to be implemented, \textbf{name} and \textbf{run}. The first method just needs to return the name of the action that will be used in the stories. The method ``run`` is the one called when the bot makes the action.
+
+\qquad Initially there were an action for every intent found in the dataset, but some of them can not be implemented, because in the database there are not all the information that a user may want to know. Thus, some of the actions were thrown away and the JSON file for the NLU was modified changing the related intent in ``other``. The dataset provided also some labels with multiple intents. Since Rasa does not support multiple intents, the adopted solution is to change the white spaces in ``\_and\_`` in order to form a single intent.
+
+\qquad The evaluation of the NLU with the new intents (Tab. \ref{nlu-precision}) shows that the majority of them (the bold ones) are not well recognized from the NLU and so they were changed in ``other``. In conclusion, the remaining actions are \textit{movie\_and\_director}, which shows a list of movies for each director, and \textit{movie\_and\_revenue}, which shows a list of revenues for random movies or for a specific director.
+
+\subsection{Bot}
+\qquad The training and the usage of the bot is divided in three different functions, \textit{train\_nlu}, \textit{train\_dialogue} and \textit{run}. While the last one is just the loading of the trained model, the other two functions are less trivial.
+\subsubsection{NLU training}
+\qquad when creating a new Trainer object the configuration file with the pipeline is passed as argument. Then the NLU is trained with the training data created before and at the end the model is saved inside a folder. At this point the NLU can tell what is the user intent when it receives a message.
+\subsubsection{Dialogue training}
+\qquad After the training, the NLU could be ready to receive questions and give answers, but in order to have a conversation it is necessary to train an agent that handle the dialogue. The agent takes in input the interpreter (the NLU created), the domain file and two policies, Memoization and Keras. Then the agent is trained over the stories and it is saved inside a folder. For testing purposes there is also a method called ``online\_training`` that for every message received shows what the bot understood, what is the user intent, which entities are recognized and what is the next action that the bot think it should make.
+
+\section{Evaluation and results}
+\qquad The NLU was evaluated with the Rasa NLU library and the results are showed in Table \ref{results-spacy} and they are all over 90\%. The best method to evaluate the bot is to use it and see how it behaves. Even if the accuracy is high, the bot has some limits. One is the wrong recognition of a movie name. Sometimes the name of a movie is only recognized by half, for instance, ``men in black`` is splitted in two: ``man`` as the movie name and ``black`` as the language. The dialogue is handled well, because if the user search for a director name and then the release date the bot provides the correct answer, but there is a case where in a sentence ``it`` is used as pronoun, but it is recognized as a movie title. 
+
+\begin{table}[ht]
+\centering
+\caption{NLU evaluation results}
+\label{results-spacy}
+\begin{tabular}{|l|l|}
+\hline
+F1-Score  & 0.928265461144 \\
+Precision & 0.921879261649 \\
+Accuracy  & 0.941881366087 \\ \hline
+\end{tabular}
+\end{table}
+
+\begin{table*}[ht]
+\centering
+\caption{Evaluation of the NLU with spacy pipeline}
+\label{nlu-precision}
+\begin{tabular}{|l|llll|}
+\hline
+                                                   & precision & recall & f1-score & support \\ \hline
+actor\_name                                                 & 0.95          & 1.00          & 0.98          & 202         \\
+affirm                                                      & 0.92          & 1.00          & 0.96          & 11          \\
+\textbf{award\_ceremony\_and\_award\_category}              & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{2}  \\
+budget                                                      & 0.99          & 0.99          & 0.99          & 113         \\
+country                                                     & 0.98          & 1.00          & 0.99          & 60          \\
+deny                                                        & 1.00          & 1.00          & 1.00          & 3           \\
+\textbf{director\_and\_movie\_and\_date\_and\_star\_rating} & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{1}  \\
+\textbf{director\_and\_movie\_and\_star\_rating}            & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{4}  \\
+\textbf{director\_and\_movie\_name}                         & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{1}  \\
+director\_name                                              & 0.95          & 0.98          & 0.97          & 178         \\
+genre                                                       & 0.97          & 1.00          & 0.98          & 61          \\
+goodbye                                                     & 1.00          & 1.00          & 1.00          & 8           \\
+greet                                                       & 1.00          & 1.00          & 1.00          & 8           \\
+language                                                    & 0.92          & 1.00          & 0.96          & 49          \\
+movie                                                       & 0.93          & 0.93          & 0.93          & 1527        \\
+\textbf{movie\_and\_budget}                                 & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{1}  \\
+\textbf{movie\_and\_date}                                   & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{2}  \\
+movie\_and\_director                                        & 1.00          & 0.83          & 0.91          & 6           \\
+\textbf{movie\_and\_language}                               & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{1}  \\
+\textbf{movie\_and\_rating}                                 & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{3}  \\
+movie\_and\_revenue                                         & 1.00          & 0.33          & 0.50          & 3           \\
+\textbf{movie\_and\_star\_rating}                           & \textbf{0.57} & \textbf{0.25} & \textbf{0.35} & \textbf{16} \\
+movie\_count                                                & 1.00          & 1.00          & 1.00          & 30          \\
+movie\_name                                                 & 0.77          & 1.00          & 0.87          & 24          \\
+other                                                       & 0.85          & 0.83          & 0.84          & 675         \\
+rating                                                      & 0.94          & 0.99          & 0.96          & 75          \\
+\textbf{rating\_and\_star\_rating}                          & \textbf{0.00} & \textbf{0.00} & \textbf{0.00} & \textbf{1}  \\
+release\_date                                               & 0.93          & 0.99          & 0.96          & 163         \\
+revenue                                                     & 0.98          & 1.00          & 0.99          & 130         \\
+runtime                                                     & 1.00          & 1.00          & 1.00          & 7           \\
+star\_rating                                                & 0.00          & 0.00          & 0.00          & 3                      \\ \hline
+\end{tabular}
+\end{table*}
+
+
 
 
 % include your own bib file like this:
