@@ -141,5 +141,5 @@ def run(train_file, label_file, flag):
         json.dump(final_json, j)
 
 
-# run(train_data, train_labels, 0)
-run(test_data, test_labels, 1)
+run(train_data, train_labels, 0)
+# run(test_data, test_labels, 1)

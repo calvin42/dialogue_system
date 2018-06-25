@@ -20,7 +20,7 @@ from rasa_core.policies.memoization import MemoizationPolicy
 
 
 from database_manager import MovieBuff
-from gtts import gTTS
+# from gtts import gTTS
 import random
 import time
 
